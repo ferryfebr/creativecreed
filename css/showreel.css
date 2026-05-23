@@ -43,21 +43,19 @@
   right: 20px;
   width: 44px;
   height: 44px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #888888;
   text-decoration: none;
   z-index: 10;
   transition: all 0.3s ease;
-  backdrop-filter: blur(4px);
 }
 
 .btn-close-showreel:hover {
-  background: var(--accent-red);
-  transform: scale(1.1);
+  color: #ffffff;
+  transform: scale(1.15);
 }
 
 /* Make video controls always visible instead of hiding on hover out */
