@@ -909,20 +909,26 @@ body.light-theme .creative-solutions {
 .expand-gallery {
   display: flex;
   gap: 15px;
-  height: 500px;
+  height: 400px;
   width: 100%;
+  padding: 0 80px;
+  box-sizing: border-box;
 }
 
 .expand-item {
   position: relative;
   flex: 1;
-  border-radius: 12px;
+  border-radius: 10px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
   transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 /* Reset all items when gallery is hovered, and only expand hovered */
@@ -1028,6 +1034,7 @@ body.light-theme .creative-solutions {
   .expand-gallery {
     flex-direction: column;
     height: 700px;
+    padding: 0;
   }
 
   .creative-solutions__title {
