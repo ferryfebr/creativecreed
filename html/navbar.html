@@ -1,0 +1,92 @@
+<nav class="navbar" id="navbar">
+  <div class="navbar__inner">
+    <!-- Logo -->
+    <a href="index.html" class="navbar__logo">
+      <span class="logo__prefix">JC</span>
+      <span class="logo__name"><span class="logo__creative">CREATIVE</span><span
+          class="logo__creed">CREED</span></span>
+    </a>
+
+    <!-- Nav Items -->
+    <ul class="navbar__menu" id="navMenu">
+      <!-- Search Button -->
+      <li class="nav-item nav-item--search">
+        <button class="nav-btn nav-btn--icon" id="searchToggle" aria-label="Search">
+          <svg class="icon-search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </button>
+        <!-- Search input (hidden by default) -->
+        <div class="search-popup" id="searchPopup">
+          <input type="text" class="search-input" placeholder="Search..." id="searchInput" />
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="index.html" class="nav-btn">Works</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="showreel.html" class="nav-btn nav-btn--badge">
+          Showreel
+          <span class="badge-dot"></span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-btn">Service</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-btn">About Us</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-btn">Our Clients</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-btn">Contact Us</a>
+      </li>
+
+      <!-- Theme Toggle -->
+      <li class="nav-item nav-item--theme">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-toggle__track">
+            <span class="theme-icon theme-icon--sun">
+              <!-- Sun -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            </span>
+            <span class="theme-icon theme-icon--moon">
+              <!-- Moon -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </span>
+            <span class="theme-toggle__knob"></span>
+          </span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Hamburger (mobile) -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>

@@ -10,102 +10,11 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
-  <nav class="navbar" id="navbar">
-    <div class="navbar__inner">
-      <!-- Logo -->
-      <a href="#" class="navbar__logo">
-        <span class="logo__prefix">JC</span>
-        <span class="logo__name"><span class="logo__creative">CREATIVE</span><span
-            class="logo__creed">CREED</span></span>
-      </a>
-
-      <!-- Nav Items -->
-      <ul class="navbar__menu" id="navMenu">
-        <!-- Search Button -->
-        <li class="nav-item nav-item--search">
-          <button class="nav-btn nav-btn--icon" id="searchToggle" aria-label="Search">
-            <svg class="icon-search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </button>
-          <!-- Search input (hidden by default) -->
-          <div class="search-popup" id="searchPopup">
-            <input type="text" class="search-input" placeholder="Search..." id="searchInput" />
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn nav-btn--active">Works</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="showreel.html" class="nav-btn nav-btn--badge">
-            Showreel
-            <span class="badge-dot"></span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn">Service</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn">About Us</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn">Our Clients</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn">Contact Us</a>
-        </li>
-
-        <!-- Theme Toggle -->
-        <li class="nav-item nav-item--theme">
-          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <span class="theme-toggle__track">
-              <span class="theme-icon theme-icon--sun">
-                <!-- Sun -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="5" />
-                  <line x1="12" y1="1" x2="12" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="23" />
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                  <line x1="1" y1="12" x2="3" y2="12" />
-                  <line x1="21" y1="12" x2="23" y2="12" />
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-              </span>
-              <span class="theme-icon theme-icon--moon">
-                <!-- Moon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-              </span>
-              <span class="theme-toggle__knob"></span>
-            </span>
-          </button>
-        </li>
-      </ul>
-
-      <!-- Hamburger (mobile) -->
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
+  <div id="navbar-placeholder"></div>
 
   <!-- Demo page filler -->
   <section class="creative-solutions">
@@ -318,100 +227,9 @@
     </div>
   </div>
 
-  <footer class="site-footer">
-    <div class="footer-main">
-      <div class="footer-grid">
-        <!-- Kolom 1: Logo & Deskripsi -->
-        <div class="footer-col footer-col--brand">
-          <div class="footer-logo">
-            <span class="logo-dc">JC</span><span class="logo-creative">CREATIVE</span><span
-              class="logo-creed">CREED</span>
-          </div>
-          <p class="footer-desc">
-            With years of experience working in events and exhibitions
-            industries in Malaysia, our strong presence, regional teams, and
-            global marketing organizations offer international expertise in
-            exhibition design and event management.
-          </p>
-        </div>
+  <div id="footer-placeholder"></div>
 
-        <!-- Kolom 2: Hiring & Contact -->
-        <div class="footer-col footer-col--contact">
-          <div class="footer-hiring">
-            <p>Looking for a job or internship?</p>
-            <p>
-              Email
-              <a href="mailto:career@creativecreed.my" class="footer-email">career@creativecreed.my</a>
-            </p>
-          </div>
-
-          <div class="footer-contacts">
-            <h4 class="footer-section-title">Contact</h4>
-
-            <div class="contact-person">
-              <strong class="contact-name">Syaiful Bakhtiar Salim</strong>
-              <span class="contact-role">Managing Director</span>
-              <span class="contact-tel">Tel: +6013 384 3403</span>
-            </div>
-
-            <div class="contact-person">
-              <strong class="contact-name">Muhammad Hudhayfah bin Zulkifli</strong>
-              <span class="contact-role">Creative Director</span>
-              <span class="contact-tel">Tel: +6016 665 7949</span>
-            </div>
-
-            <div class="contact-person">
-              <strong class="contact-name">Fairuz Maaxon</strong>
-              <span class="contact-role">Director of Business Development</span>
-              <span class="contact-tel">Tel: +6011 7077 7110</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Kolom 3: Lokasi -->
-        <div class="footer-col footer-col--location">
-          <h4 class="footer-section-title">Location</h4>
-
-          <div class="location-block">
-            <strong class="location-label">Headquarters</strong>
-            <address>
-              Pusat Komersial Arena Bintang,<br />
-              B-20-G, Jalan Zunal U5/178, Seksyen U5,<br />
-              40150 Shah Alam, Selangor, Malaysia<br />
-              Tel/Fax: +603 7734 4955
-            </address>
-          </div>
-
-          <div class="location-block">
-            <strong class="location-label">Johor Branch</strong>
-            <address>
-              144A, Jalan Ronggeng 19, Taman Nesa,<br />
-              81300 Skudai, Johor Bahru, Johor<br />
-              Tel: +6013 777 7603
-            </address>
-          </div>
-
-          <div class="location-block">
-            <strong class="location-label">Sarawak Branch</strong>
-            <address>
-              No.9, 1st Floor, Industrial Shop, Bau Bazaar,<br />
-              94000 Bau District, Kuching, Sarawak<br />
-              Tel: +6017 855 5509
-            </address>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Copyright Bar -->
-    <div class="footer-bottom">
-      <p class="footer-copyright">
-        ©2026, CREATIVE CREED. All rights reserved.
-      </p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 
 </html>

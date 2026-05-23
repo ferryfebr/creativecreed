@@ -10,107 +10,16 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="showreel.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/showreel.css" />
 </head>
 
 <body>
-  <nav class="navbar" id="navbar">
-    <div class="navbar__inner">
-      <!-- Logo -->
-      <a href="#" class="navbar__logo">
-        <span class="logo__prefix">JC</span>
-        <span class="logo__name"><span class="logo__creative">CREATIVE</span><span
-            class="logo__creed">CREED</span></span>
-      </a>
-
-      <!-- Nav Items -->
-      <ul class="navbar__menu" id="navMenu">
-        <!-- Search Button -->
-        <li class="nav-item nav-item--search">
-          <button class="nav-btn nav-btn--icon" id="searchToggle" aria-label="Search">
-            <svg class="icon-search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </button>
-          <!-- Search input (hidden by default) -->
-          <div class="search-popup" id="searchPopup">
-            <input type="text" class="search-input" placeholder="Search..." id="searchInput" />
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a href="index.html" class="nav-btn">Works</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="showreel.html" class="nav-btn nav-btn--badge nav-btn--active">
-            Showreel
-            <span class="badge-dot"></span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn">Service</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn">About Us</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn">Our Clients</a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-btn">Contact Us</a>
-        </li>
-
-        <!-- Theme Toggle -->
-        <li class="nav-item nav-item--theme">
-          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-            <span class="theme-toggle__track">
-              <span class="theme-icon theme-icon--sun">
-                <!-- Sun -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="5" />
-                  <line x1="12" y1="1" x2="12" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="23" />
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                  <line x1="1" y1="12" x2="3" y2="12" />
-                  <line x1="21" y1="12" x2="23" y2="12" />
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-              </span>
-              <span class="theme-icon theme-icon--moon">
-                <!-- Moon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-              </span>
-              <span class="theme-toggle__knob"></span>
-            </span>
-          </button>
-        </li>
-      </ul>
-
-      <!-- Hamburger (mobile) -->
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
+  <div id="navbar-placeholder"></div>
 
   <!-- Showreel page content -->
   <main class="showreel-page">
-    <a href="index.html" class="btn-close-showreel" aria-label="Close Showreel">
+    <a href="../index.html" class="btn-close-showreel" aria-label="Close Showreel">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -125,7 +34,7 @@
         <div class="showreel-track" id="showreelTrack">
           <!-- Video 1 -->
           <div class="showreel-slide">
-            <video class="slider-video" src="JLG TOWN HALL 2025.mp4" autoplay loop muted playsinline></video>
+            <video class="slider-video" src="../JLG TOWN HALL 2025.mp4" autoplay loop muted playsinline></video>
             <div class="vc" data-video-index="0">
               <!-- Play / Pause -->
               <button class="vc__btn" data-action="playpause" aria-label="Play / Pause">
@@ -172,7 +81,7 @@
           </div>
           <!-- Video 2 -->
           <div class="showreel-slide">
-            <video class="slider-video" src="JLG TOWN HALL 2025.mp4" loop muted playsinline></video>
+            <video class="slider-video" src="../JLG TOWN HALL 2025.mp4" loop muted playsinline></video>
             <div class="vc" data-video-index="1">
               <!-- Play / Pause -->
               <button class="vc__btn" data-action="playpause" aria-label="Play / Pause">
@@ -219,7 +128,7 @@
           </div>
           <!-- Video 2 -->
           <div class="showreel-slide">
-            <video class="slider-video" src="JLG TOWN HALL 2025.mp4" loop muted playsinline></video>
+            <video class="slider-video" src="../JLG TOWN HALL 2025.mp4" loop muted playsinline></video>
             <div class="vc" data-video-index="1">
               <!-- Play / Pause -->
               <button class="vc__btn" data-action="playpause" aria-label="Play / Pause">
@@ -280,8 +189,8 @@
     </div> -->
   </main>
 
-  <script src="script.js"></script>
-  <script src="showreel.js"></script>
+  <script src="../js/script.js"></script>
+  <script src="../js/showreel.js"></script>
 </body>
 
 </html>
