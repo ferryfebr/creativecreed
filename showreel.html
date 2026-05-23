@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DC Creative Creed – Navbar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="showreel.css" />
+</head>
+
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <!-- Logo -->
+      <a href="#" class="navbar__logo">
+        <span class="logo__prefix">JC</span>
+        <span class="logo__name"><span class="logo__creative">CREATIVE</span><span
+            class="logo__creed">CREED</span></span>
+      </a>
+
+      <!-- Nav Items -->
+      <ul class="navbar__menu" id="navMenu">
+        <!-- Search Button -->
+        <li class="nav-item nav-item--search">
+          <button class="nav-btn nav-btn--icon" id="searchToggle" aria-label="Search">
+            <svg class="icon-search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+          <!-- Search input (hidden by default) -->
+          <div class="search-popup" id="searchPopup">
+            <input type="text" class="search-input" placeholder="Search..." id="searchInput" />
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a href="index.html" class="nav-btn">Works</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="showreel.html" class="nav-btn nav-btn--badge nav-btn--active">
+            Showreel
+            <span class="badge-dot"></span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">Service</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">About Us</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">Our Clients</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">Contact Us</a>
+        </li>
+
+        <!-- Theme Toggle -->
+        <li class="nav-item nav-item--theme">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span class="theme-toggle__track">
+              <span class="theme-icon theme-icon--sun">
+                <!-- Sun -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              </span>
+              <span class="theme-icon theme-icon--moon">
+                <!-- Moon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              </span>
+              <span class="theme-toggle__knob"></span>
+            </span>
+          </button>
+        </li>
+      </ul>
+
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Showreel page content -->
+  <main class="showreel-page">
+    <a href="index.html" class="btn-close-showreel" aria-label="Close Showreel">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </a>
+
+    <div class="showreel-slider-wrapper">
+      <button class="slider-arrow slider-arrow-prev" id="sliderPrev" aria-label="Previous Video">&#10094;</button>
+
+      <div class="showreel-container" id="videoContainer">
+        <div class="showreel-track" id="showreelTrack">
+          <!-- Video 1 -->
+          <div class="showreel-slide">
+            <video class="slider-video" src="JLG TOWN HALL 2025.mp4" autoplay loop muted playsinline></video>
+            <div class="vc" data-video-index="0">
+              <!-- Play / Pause -->
+              <button class="vc__btn" data-action="playpause" aria-label="Play / Pause">
+                <svg class="vc__icon vc__icon--play" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5,3 19,12 5,21" />
+                </svg>
+                <svg class="vc__icon vc__icon--pause" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+                  <rect x="5" y="3" width="4" height="18" />
+                  <rect x="15" y="3" width="4" height="18" />
+                </svg>
+              </button>
+              <!-- Progress bar -->
+              <div class="vc__progress" data-action="seek">
+                <div class="vc__progress-bar">
+                  <div class="vc__progress-fill"></div>
+                  <div class="vc__progress-thumb"></div>
+                </div>
+              </div>
+              <!-- Mute / Unmute -->
+              <button class="vc__btn" data-action="mute" aria-label="Mute / Unmute">
+                <svg class="vc__icon vc__icon--vol" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+                <svg class="vc__icon vc__icon--muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" style="display:none">
+                  <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              </button>
+              <!-- Fullscreen -->
+              <button class="vc__btn" data-action="fullscreen" aria-label="Fullscreen">
+                <svg class="vc__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+                  <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
+                  <path d="M3 16v3a2 2 0 0 0 2 2h3" />
+                  <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- Video 2 -->
+          <div class="showreel-slide">
+            <video class="slider-video" src="JLG TOWN HALL 2025.mp4" loop muted playsinline></video>
+            <div class="vc" data-video-index="1">
+              <!-- Play / Pause -->
+              <button class="vc__btn" data-action="playpause" aria-label="Play / Pause">
+                <svg class="vc__icon vc__icon--play" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5,3 19,12 5,21" />
+                </svg>
+                <svg class="vc__icon vc__icon--pause" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+                  <rect x="5" y="3" width="4" height="18" />
+                  <rect x="15" y="3" width="4" height="18" />
+                </svg>
+              </button>
+              <!-- Progress bar -->
+              <div class="vc__progress" data-action="seek">
+                <div class="vc__progress-bar">
+                  <div class="vc__progress-fill"></div>
+                  <div class="vc__progress-thumb"></div>
+                </div>
+              </div>
+              <!-- Mute / Unmute -->
+              <button class="vc__btn" data-action="mute" aria-label="Mute / Unmute">
+                <svg class="vc__icon vc__icon--vol" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+                <svg class="vc__icon vc__icon--muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" style="display:none">
+                  <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              </button>
+              <!-- Fullscreen -->
+              <button class="vc__btn" data-action="fullscreen" aria-label="Fullscreen">
+                <svg class="vc__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+                  <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
+                  <path d="M3 16v3a2 2 0 0 0 2 2h3" />
+                  <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- Video 2 -->
+          <div class="showreel-slide">
+            <video class="slider-video" src="JLG TOWN HALL 2025.mp4" loop muted playsinline></video>
+            <div class="vc" data-video-index="1">
+              <!-- Play / Pause -->
+              <button class="vc__btn" data-action="playpause" aria-label="Play / Pause">
+                <svg class="vc__icon vc__icon--play" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5,3 19,12 5,21" />
+                </svg>
+                <svg class="vc__icon vc__icon--pause" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+                  <rect x="5" y="3" width="4" height="18" />
+                  <rect x="15" y="3" width="4" height="18" />
+                </svg>
+              </button>
+              <!-- Progress bar -->
+              <div class="vc__progress" data-action="seek">
+                <div class="vc__progress-bar">
+                  <div class="vc__progress-fill"></div>
+                  <div class="vc__progress-thumb"></div>
+                </div>
+              </div>
+              <!-- Mute / Unmute -->
+              <button class="vc__btn" data-action="mute" aria-label="Mute / Unmute">
+                <svg class="vc__icon vc__icon--vol" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+                <svg class="vc__icon vc__icon--muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" style="display:none">
+                  <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              </button>
+              <!-- Fullscreen -->
+              <button class="vc__btn" data-action="fullscreen" aria-label="Fullscreen">
+                <svg class="vc__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+                  <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
+                  <path d="M3 16v3a2 2 0 0 0 2 2h3" />
+                  <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Counter -->
+        <!-- <div class="slide-counter" id="slideCounter">1 / 2</div> -->
+      </div>
+
+      <button class="slider-arrow slider-arrow-next" id="sliderNext" aria-label="Next Video">&#10095;</button>
+    </div>
+
+    <!-- Dot Indicators
+    <div class="slider-dots" id="sliderDots">
+      <button class="slider-dot slider-dot--active" data-index="0" aria-label="Video 1"></button>
+      <button class="slider-dot" data-index="1" aria-label="Video 2"></button>
+    </div> -->
+  </main>
+
+  <script src="script.js"></script>
+  <script src="showreel.js"></script>
+</body>
+
+</html>

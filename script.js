@@ -132,7 +132,7 @@
   const modalExpandBg = document.getElementById('modalExpandBg');
   const modalClose = document.getElementById('modalClose');
   const modalOverlay = document.getElementById('modalOverlay');
-  
+
   const modalImg = document.getElementById('modalImg');
   const modalTitle = document.getElementById('modalTitle');
   const modalDesc = document.getElementById('modalDesc');
@@ -143,27 +143,27 @@
     const title = meta.querySelector('.meta-title').innerHTML;
     const desc = meta.querySelector('.meta-desc').innerHTML;
     const imgSrc = meta.querySelector('.meta-img').textContent;
-    
+
     // Set content
     modalTitle.innerHTML = title;
     modalDesc.innerHTML = desc;
     modalImg.src = imgSrc;
-    
+
     // Get card rect for the starting position of animation
     const rect = card.getBoundingClientRect();
-    
+
     // Set initial position of the expanding background
     modalExpandBg.style.top = rect.top + 'px';
     modalExpandBg.style.left = rect.left + 'px';
     modalExpandBg.style.width = rect.width + 'px';
     modalExpandBg.style.height = rect.height + 'px';
-    
+
     // Add classes to start animation
     modal.classList.add('is-animating');
-    
+
     // Prevent scrolling
     document.body.style.overflow = 'hidden';
-    
+
     // Request animation frame to ensure the initial state is applied
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -172,7 +172,7 @@
         modalExpandBg.style.left = '0px';
         modalExpandBg.style.width = '100vw';
         modalExpandBg.style.height = '100vh';
-        
+
         modal.classList.add('is-active');
       });
     });
@@ -180,14 +180,14 @@
 
   function closeModal() {
     modal.classList.remove('is-active');
-    
+
     // After fade out of content completes, revert the expanding background
     setTimeout(() => {
       // Find the currently clicked card if we want to shrink back exactly,
       // or we can just fade it out
       modal.classList.remove('is-animating');
       document.body.style.overflow = '';
-      
+
       // Reset video/image if needed
       modalImg.src = '';
     }, 400); // Wait for opacity transition
@@ -197,8 +197,8 @@
     card.addEventListener('click', () => openModal(card));
   });
 
-  if(modalClose) modalClose.addEventListener('click', closeModal);
-  if(modalOverlay) modalOverlay.addEventListener('click', closeModal);
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
 
 })();
 /**
