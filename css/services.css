@@ -1,0 +1,152 @@
+/* =========================================
+   SERVICES PAGE
+   services.css
+   ========================================= */
+
+/* =========================================
+   HERO / PAGE HEADER
+   ========================================= */
+.services-hero {
+  background: transparent;
+  padding: 52px 20px 32px;
+  text-align: center;
+}
+
+.services-hero__inner {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.services-hero__eyebrow {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(2.5rem, 9vw, 4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  transition: color var(--transition);
+}
+
+.services-hero__title {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(2.5rem, 9vw, 4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  transition: color var(--transition);
+}
+
+/* =========================================
+   SERVICES PAGE WRAPPER
+   ========================================= */
+.services-page {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 48px 20px 72px;
+}
+
+/* =========================================
+   SERVICES GRID
+   ========================================= */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* =========================================
+   SERVICE CARD
+   ========================================= */
+.service-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #111;
+  cursor: default;
+  /* Entrance animation */
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.35s ease;
+}
+
+/* heheh */
+/* Stagger animation for each card */
+.service-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* hehe */
+/* Premium lift-up effect on hover */
+.service-card.is-visible:hover {
+  transform: translateY(-6px);
+}
+
+/* ---- Image Wrapper ---- */
+.service-card__img-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.service-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ---- Label overlay ---- */
+.service-card__label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 28px 14px 12px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.service-card__label span {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+  line-height: 1.25;
+  transition: color 0.2s ease;
+  text-align: center;
+}
+
+/* =========================================
+   RESPONSIVE – Tablet
+   ========================================= */
+@media (max-width: 680px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .services-page {
+    padding: 32px 14px 56px;
+  }
+
+  .services-hero {
+    padding: 36px 16px 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

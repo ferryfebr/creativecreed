@@ -19,14 +19,22 @@
       if (!video || !controls) return;
 
       const playPauseBtn = controls.querySelector('[data-action="playpause"]');
-      const playIcon = playPauseBtn ? playPauseBtn.querySelector(".vc__icon--play") : null;
-      const pauseIcon = playPauseBtn ? playPauseBtn.querySelector(".vc__icon--pause") : null;
+      const playIcon = playPauseBtn
+        ? playPauseBtn.querySelector(".vc__icon--play")
+        : null;
+      const pauseIcon = playPauseBtn
+        ? playPauseBtn.querySelector(".vc__icon--pause")
+        : null;
 
       const muteBtn = controls.querySelector('[data-action="mute"]');
       const volIcon = muteBtn ? muteBtn.querySelector(".vc__icon--vol") : null;
-      const muteIcon = muteBtn ? muteBtn.querySelector(".vc__icon--muted") : null;
+      const muteIcon = muteBtn
+        ? muteBtn.querySelector(".vc__icon--muted")
+        : null;
 
-      const fullscreenBtn = controls.querySelector('[data-action="fullscreen"]');
+      const fullscreenBtn = controls.querySelector(
+        '[data-action="fullscreen"]',
+      );
       const progressWrapper = controls.querySelector('[data-action="seek"]');
       const progressBar = controls.querySelector(".vc__progress-fill");
       const progressThumb = controls.querySelector(".vc__progress-thumb");
@@ -240,6 +248,32 @@
   function init() {
     initShowreelVideo();
     initShowreelSlider();
+
+    // Menangani Spacebar untuk Play/Pause video yang sedang aktif
+    document.addEventListener("keydown", (e) => {
+      if (
+        e.code === "Space" &&
+        e.target.tagName !== "INPUT" &&
+        e.target.tagName !== "TEXTAREA"
+      ) {
+        e.preventDefault(); // Mencegah halaman scroll ke bawah
+
+        // Cari slide yang sedang aktif saat ini (atau slide pertama jika belum ada)
+        const activeSlide =
+          document.querySelector(".showreel-slide.is-active") ||
+          document.querySelector(".showreel-slide");
+        if (activeSlide) {
+          const video = activeSlide.querySelector(".slider-video");
+          if (video) {
+            if (video.paused) {
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+            }
+          }
+        }
+      }
+    });
   }
 
   if (document.readyState === "loading") {

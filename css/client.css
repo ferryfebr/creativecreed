@@ -1,0 +1,84 @@
+/* =========================================
+   HERO / PAGE HEADER
+   ========================================= */
+.client-hero {
+  background: transparent;
+  padding: 52px 20px 32px;
+  text-align: center;
+}
+
+.client-hero__inner {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.client-hero__eyebrow {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(2.5rem, 9vw, 4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  transition: color var(--transition);
+}
+
+.client-hero__title {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(2.5rem, 9vw, 4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  transition: color var(--transition);
+}
+
+/* =========================================
+   CLIENTS GRID SECTION
+   ========================================= */
+.clients-section {
+  padding: 20px 20px 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.clients-board {
+  background-color: #e2dfdf;
+  border: 8px solid #cc2229;
+  border-radius: 200px; /* Sudut melingkar / kapsul */
+  padding: 60px 40px;
+  width: 90%;
+  max-width: 1300px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, auto);
+  gap: 30px;
+  align-items: center;
+  justify-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.client-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+}
+
+.client-logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Paksakan 6 kolom di HP seperti yang diminta (Meski akan sangat kecil) */
+@media (max-width: 768px) {
+  .clients-board {
+    border-radius: 30px;
+    padding: 20px 10px;
+    gap: 10px;
+  }
+  .client-logo-wrapper {
+    height: 40px;
+  }
+}

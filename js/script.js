@@ -318,13 +318,14 @@
           );
           if (worksLink) worksLink.setAttribute("href", "../index.html");
 
-          const showreelLink = document.querySelector(
-            '.navbar__menu .nav-btn[href="showreel.html"]',
+          // Perbaiki link untuk halaman subfolder
+          const htmlLinks = document.querySelectorAll(
+            '.navbar__menu .nav-btn[href^="html/"]',
           );
-          if (showreelLink) {
-            showreelLink.setAttribute("href", "showreel.html");
-            showreelLink.classList.add("nav-btn--active");
-          }
+          htmlLinks.forEach((link) => {
+            const currentHref = link.getAttribute("href");
+            link.setAttribute("href", currentHref.replace("html/", ""));
+          });
         } else {
           const logoLink = document.querySelector(".navbar__logo");
           if (logoLink) logoLink.setAttribute("href", "#");
@@ -336,12 +337,6 @@
             worksLink.setAttribute("href", "#");
             worksLink.classList.add("nav-btn--active");
           }
-
-          const showreelLink = document.querySelector(
-            '.navbar__menu .nav-btn[href="showreel.html"]',
-          );
-          if (showreelLink)
-            showreelLink.setAttribute("href", "html/showreel.html");
         }
 
         // Setup theme/search/hamburger handlers

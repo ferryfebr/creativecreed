@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&family=Poppins:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/AboutUS.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+    <!-- Page Header -->
+    <header class="about-hero">
+      <div class="about-hero__inner">
+        <h1 class="about-hero__title">Who We Are</h1>
+      </div>
+    </header>
+
+    <section class="about-hero">
+      <div class="about-hero__inner">
+        <!-- Teks Judul -->
+
+        <!-- Bungkus gambar di dalam div baru agar mudah diatur -->
+        <div class="about-hero__image-wrapper">
+          <!-- Pastikan path gambarnya benar. Karena file HTML ada di dalam folder 'html', gunakan tanda '../' untuk mundur 1 folder terlebih dahulu -->
+          <img
+            src="../aboutus-img/10YEars.png"
+            alt="10 Years Creative Creed"
+            class="about-hero__image"
+          />
+        </div>
+        <!-- Tambahkan Teks Di Sini -->
+        <div class="about-hero__description">
+          <p>
+            We are a creative agency specializing in event management, media
+            strategies, video production, and advertising
+          </p>
+          <p>
+            We are currently based in Kuala Lumpur, Johor Bahru and Kuching. We
+            create memorable events, comprehensive media strategies and
+            meaningful videos that empower and help our clients achieve their
+            desired needs. What makes us distinctively different from other
+            agencies is our unique management team. It comprises specialists in
+            their own fields
+          </p>
+          <p>
+            To us, ‘Age Is Just A Numberʼ. We move as one with the ultimate goal
+            of giving our clients the best regardless of project size and scope
+          </p>
+        </div>
+        <div class="about-hero-down">
+          <div class="about-hero__inner-down">
+            <p class="about-hero__eyebrow-down">From creative ideas to</p>
+            <h1 class="about-hero__title-down">memorable experience</h1>
+          </div>
+        </div>
+
+        <!-- Stats Card / Odometer -->
+        <div class="about-hero__stats-wrapper">
+          <div class="image-map-container">
+            <!-- Angka target diatur melalui atribut data-target="100" -->
+            <h2 class="counter-overlay counter-up" data-target="100">0</h2>
+
+            <img
+              src="../aboutus-img/Indo.png"
+              alt="Map Location"
+              class="image-map-img"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+    <script src="../js/script.js"></script>
+    <script src="../js/AboutUs.js"></script>
+  </body>
+</html>
