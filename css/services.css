@@ -19,8 +19,8 @@
 
 .services-hero__eyebrow {
   font-family: "Poppins", sans-serif;
-  font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 700;
+  font-size: clamp(1.5rem, 9vw, 4rem);
+  font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   line-height: 1.1;
@@ -30,7 +30,7 @@
 .services-hero__title {
   font-family: "Poppins", sans-serif;
   font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   line-height: 1.1;
@@ -115,7 +115,7 @@
 }
 
 .service-card__label span {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: clamp(0.85rem, 1.8vw, 1rem);
   font-weight: 700;
   color: #ffffff;

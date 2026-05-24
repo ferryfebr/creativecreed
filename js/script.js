@@ -340,10 +340,42 @@
     }
   }
 
+  // =========================================
+  // SCROLL REVEAL (IntersectionObserver)
+  // =========================================
+  function initScrollReveal() {
+    const revealEls = document.querySelectorAll(".scroll-reveal");
+    if (!revealEls.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const delay = el.dataset.revealDelay || 0;
+            setTimeout(() => {
+              el.classList.add("is-visible");
+            }, Number(delay));
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    revealEls.forEach((el, index) => {
+      el.dataset.revealDelay = index * 80;
+      observer.observe(el);
+    });
+  }
+
   // Orchestrate component loading and layout initialization
   function init() {
     const isRoot = !window.location.pathname.includes("/html/");
     const pathPrefix = isRoot ? "" : "../";
+
+    // Init scroll reveal for elements already in DOM
+    initScrollReveal();
 
     // Load Navbar
     loadComponent(
@@ -392,6 +424,8 @@
       pathPrefix + "html/footer.html",
       () => {
         initFooterHandlers();
+        // Also run scroll reveal again after footer is injected into DOM
+        initScrollReveal();
       },
     );
 

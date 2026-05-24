@@ -79,6 +79,48 @@ body.light-theme {
   padding: 0;
 }
 
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+/* Keyframe: fade in from below on page load */
+@keyframes fadeInOnLoad {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Applied to elements visible on load */
+.fade-in-on-load {
+  animation: fadeInOnLoad 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Stagger delays for multiple elements */
+.fade-in-on-load:nth-child(1) { animation-delay: 0.05s; }
+.fade-in-on-load:nth-child(2) { animation-delay: 0.15s; }
+.fade-in-on-load:nth-child(3) { animation-delay: 0.25s; }
+.fade-in-on-load:nth-child(4) { animation-delay: 0.35s; }
+
+/* Scroll reveal: hidden initial state */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scroll reveal: visible state (added by JS) */
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* --- Body --- */
 body {
   font-family: "Barlow", sans-serif;
@@ -105,6 +147,7 @@ body {
   transition:
     background var(--transition),
     box-shadow var(--transition);
+  animation: fadeInOnLoad 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .navbar__inner {
@@ -654,7 +697,7 @@ a {
    ============================================ */
 .site-footer {
   background: var(--color-white);
-  border-top: 3px solid var(--color-red);
+
   box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.06);
 }
 
@@ -719,19 +762,88 @@ a {
   color: var(--color-mid);
   line-height: 1.7;
   max-width: 380px;
+  margin-top: 100px;
+}
+
+.footer-job-text {
+  color: #8ab6fe;
+  font-weight: 500;
+
 }
 
 /* ============================================
    COLUMN: CONTACT
    ============================================ */
-/* .footer-col--contact {} */
+.footer-col--contact {
+  padding-left: 10rem;
+
+}
+
+/* ============================================
+   COLUMN: LOCATION
+   ============================================ */
+.footer-col--location {
+  padding-left: 4rem;
+}
 
 .footer-hiring {
   font-size: 0.85rem;
   color: var(--color-mid);
   margin-bottom: calc(var(--spacing-lg) * var(--footer-scale));
   padding-bottom: calc(var(--spacing-md) * var(--footer-scale));
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* YouTube Button */
+.youtube-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #000000;
+  color: #ffffff;
+  background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, rgb(255, 52, 52) 0%, #ffffff 45%, #ffffff 55%, rgb(255, 52, 52) 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: all var(--transition);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+body.light-theme .youtube-btn {
+  background-color: #adadad;
+  color: #1a1a1a;
+  background-image: linear-gradient(#adadad), linear-gradient(90deg, rgb(255, 52, 52) 0%, #ffffff 45%, #ffffff 55%, rgb(255, 52, 52) 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.youtube-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+body.light-theme .youtube-btn:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.youtube-btn i {
+  font-size: 2rem;
+  color: #e02020;
 }
 
 .footer-email {
@@ -750,8 +862,7 @@ a {
   font-size: 0.95rem;
   font-weight: 900;
   color: var(--color-red);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   margin-bottom: calc(var(--spacing-md) * var(--footer-scale));
 }
 
@@ -760,6 +871,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing-md) * var(--footer-scale));
+  padding-left: 2rem;
 }
 
 .contact-person {
@@ -837,6 +949,32 @@ a {
   letter-spacing: 0.04em;
 }
 
+/* Apply Poppins to Contact and Location text */
+.footer-contacts,
+.footer-contacts h4,
+.footer-contacts strong,
+.footer-contacts span,
+.footer-col--location,
+.footer-col--location h4,
+.footer-col--location strong,
+.footer-col--location address {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Bold for titles and names */
+.footer-contacts h4,
+.footer-contacts strong,
+.footer-col--location h4,
+.footer-col--location strong {
+  font-weight: 800 !important;
+}
+
+/* Normal weight for phone numbers and addresses */
+.footer-contacts span,
+.footer-col--location address {
+  font-weight: 500 !important;
+}
+
 /* ============================================
    RESPONSIVE — TABLET (max 900px)
    ============================================ */
@@ -893,14 +1031,7 @@ a {
    HOVER / FOCUS ANIMATIONS
    ============================================ */
 
-.contact-person:hover {
-  background: rgba(204, 34, 41, 0.04);
-  padding-left: 6px;
-}
-
-.location-block:hover {
-  padding-left: 6px;
-}
+/* Hover animations for contact and location removed */
 
 /* Reveal animation on load (driven by JS) */
 .footer-col {
@@ -1173,21 +1304,24 @@ body.light-theme .creative-solutions {
 
 .project-card--extra {
   max-height: 0;
-  margin-top: -55px; /* cancel the grid row gap */
+  margin-top: -55px;
+  /* cancel the grid row gap */
   opacity: 0;
   overflow: hidden;
-  border-color: transparent; /* hide borders when collapsed */
+  border-color: transparent;
+  /* hide borders when collapsed */
   pointer-events: none;
   transform: translateY(15px);
-  transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-              margin-top 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-              opacity 0.5s ease 0.1s, 
-              transform 0.6s ease 0.1s, 
-              border-color 0.8s ease;
+  transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    margin-top 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s ease 0.1s,
+    transform 0.6s ease 0.1s,
+    border-color 0.8s ease;
 }
 
 .project-card--extra.is-visible {
-  max-height: 300px; /* allows 250px height */
+  max-height: 300px;
+  /* allows 250px height */
   margin-top: 0;
   opacity: 1;
   border-color: var(--border-color);
