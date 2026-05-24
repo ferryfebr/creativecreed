@@ -274,6 +274,8 @@
       const wrapperLeft = (window.innerWidth - wrapperWidth) / 2;
       const wrapperTop = Math.max((window.innerHeight - wrapperHeight) / 2, 40);
 
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.paddingRight = scrollbarWidth + "px";
       modal.classList.add("is-animating");
       document.body.style.overflow = "hidden";
 
@@ -293,6 +295,7 @@
       setTimeout(() => {
         modal.classList.remove("is-animating");
         document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
         modalVideo.querySelector('source').src = "";
         modalVideo.load();
       }, 400);
@@ -304,6 +307,37 @@
 
     if (modalClose) modalClose.addEventListener("click", closeModal);
     if (modalOverlay) modalOverlay.addEventListener("click", closeModal);
+
+    // Show More / Show Less Logic
+    const btnShowMore = document.getElementById("btnShowMore");
+    const extraCards = document.querySelectorAll(".project-card--extra");
+    let isExpanded = false;
+
+    if (btnShowMore && extraCards.length > 0) {
+      btnShowMore.addEventListener("click", (e) => {
+        e.preventDefault();
+        isExpanded = !isExpanded;
+
+        if (isExpanded) {
+          extraCards.forEach(card => {
+            card.classList.add("is-visible");
+            // Wait for max-height animation to finish before showing overflow (title text)
+            setTimeout(() => {
+              if (card.classList.contains("is-visible")) {
+                card.style.overflow = "visible";
+              }
+            }, 800);
+          });
+        } else {
+          extraCards.forEach(card => {
+            card.style.overflow = "hidden"; // Hide overflow immediately before collapsing
+            card.classList.remove("is-visible");
+          });
+        }
+
+        btnShowMore.textContent = isExpanded ? "Show Less" : "Show More";
+      });
+    }
   }
 
   // Orchestrate component loading and layout initialization
