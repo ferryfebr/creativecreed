@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -20,8 +20,13 @@
   <!-- Demo page filler -->
   <section class="creative-solutions">
     <div class="creative-solutions__container">
-      <h2 class="creative-solutions__title">A <span class="text-red">Creative Agency</span> Solutions<br />For Events &
-        Exhibitions</h2>
+      <h2 class="creative-solutions__title">
+        <span class="creative-solutions__small">A</span>
+        <span class="creative-solutions__strong text-red">Creative Agency</span>
+        <span class="creative-solutions__strong">Solutions</span><br />
+        <span class="creative-solutions__small">For</span>
+        <span class="creative-solutions__strong">Events & Exhibitions</span>
+      </h2>
 
       <div class="expand-gallery">
         <!-- Item 1 -->
@@ -150,7 +155,7 @@
           <div class="project-card__meta" style="display: none;">
             <span class="meta-title">JLG TOWN HALL 2025</span>
             <span class="meta-desc">Information for JLG Town Hall 2025...</span>
-            <span class="meta-img">ourservice-image/Truss & Grand Support System.jpeg</span>
+            <span class="meta-img">JLG TOWN HALL 2025.mp4</span>
           </div>
         </div>
         <!-- Item 4 -->
@@ -217,7 +222,10 @@
 
         <div class="project-modal__body">
           <div class="project-modal__media">
-            <img src="" alt="" id="modalImg" />
+            <video id="modalVideo" width="100%" height="100%" controls>
+              <source src="" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
           </div>
           <div class="project-modal__info">
             <h2 id="modalTitle">JSCF 2025</h2>
@@ -234,8 +242,8 @@
     <div class="container contact-content scroll-fade">
       <div class="contact-card-redesign">
         <h2 class="contact-title text-center">
-          WE'RE ALWAYS READY TO HELP YOU AND<br />
-          ANSWER YOUR QUESTIONS
+          WE'RE ALWAYS READY TO HELP YOU<br />
+          AND ANSWER YOUR QUESTIONS
         </h2>
 
         <div class="contact-click-here">

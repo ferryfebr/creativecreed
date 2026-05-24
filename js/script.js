@@ -244,7 +244,7 @@
     const modalExpandBg = document.getElementById("modalExpandBg");
     const modalClose = document.getElementById("modalClose");
     const modalOverlay = document.getElementById("modalOverlay");
-    const modalImg = document.getElementById("modalImg");
+    const modalVideo = document.getElementById("modalVideo");
     const modalTitle = document.getElementById("modalTitle");
     const modalDesc = document.getElementById("modalDesc");
 
@@ -259,7 +259,9 @@
 
       modalTitle.innerHTML = title;
       modalDesc.innerHTML = desc;
-      modalImg.src = imgSrc;
+      const videoSource = modalVideo.querySelector('source');
+      videoSource.src = imgSrc;
+      modalVideo.load();
 
       const rect = card.getBoundingClientRect();
       modalExpandBg.style.top = rect.top + "px";
@@ -267,15 +269,20 @@
       modalExpandBg.style.width = rect.width + "px";
       modalExpandBg.style.height = rect.height + "px";
 
+      const wrapperWidth = Math.min(window.innerWidth * 0.50, 550);
+      const wrapperHeight = Math.min(window.innerHeight * 0.60, 600);
+      const wrapperLeft = (window.innerWidth - wrapperWidth) / 2;
+      const wrapperTop = Math.max((window.innerHeight - wrapperHeight) / 2, 40);
+
       modal.classList.add("is-animating");
       document.body.style.overflow = "hidden";
 
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          modalExpandBg.style.top = "0px";
-          modalExpandBg.style.left = "0px";
-          modalExpandBg.style.width = "100vw";
-          modalExpandBg.style.height = "100vh";
+          modalExpandBg.style.top = wrapperTop + "px";
+          modalExpandBg.style.left = wrapperLeft + "px";
+          modalExpandBg.style.width = wrapperWidth + "px";
+          modalExpandBg.style.height = wrapperHeight + "px";
           modal.classList.add("is-active");
         });
       });
@@ -286,7 +293,8 @@
       setTimeout(() => {
         modal.classList.remove("is-animating");
         document.body.style.overflow = "";
-        modalImg.src = "";
+        modalVideo.querySelector('source').src = "";
+        modalVideo.load();
       }, 400);
     }
 
