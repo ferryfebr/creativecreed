@@ -28,8 +28,8 @@
         );
 
         cards.forEach((card, index) => {
-            // Stagger: left column 0ms, right column 80ms, each row adds 100ms
-            card.dataset.animDelay = (index % 2) * 80 + Math.floor(index / 2) * 100;
+            // Stagger: each row (2 cards) appears simultaneously, rows delayed by 120ms
+            card.dataset.animDelay = Math.floor(index / 2) * 120;
             observer.observe(card);
         });
     }

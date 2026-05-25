@@ -17,7 +17,7 @@
   --border-color: rgba(255, 255, 255, 0.12);
   --search-bg: rgba(255, 255, 255, 0.06);
   --search-border: rgba(255, 255, 255, 0.18);
-  --knob-color: #ffffff;
+  --knob-color: #141414;
   --knob-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   --shadow-nav: 0 2px 24px rgba(0, 0, 0, 0.45);
   --toggle-track-bg: #2a2a2a;
@@ -50,6 +50,10 @@
   src: url('../font/Poppins-ExtraBold.ttf') format('truetype');
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Light theme overrides */
 body.light-theme {
   --bg-nav: #f0f0f0;
@@ -62,7 +66,7 @@ body.light-theme {
   --border-color: rgba(0, 0, 0, 0.12);
   --search-bg: rgba(0, 0, 0, 0.06);
   --search-border: rgba(0, 0, 0, 0.18);
-  --knob-color: #111111;
+  --knob-color: #ffffff;
   --knob-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   --shadow-nav: 0 2px 24px rgba(0, 0, 0, 0.1);
   --toggle-track-bg: #cccccc;
@@ -339,11 +343,11 @@ body.light-theme .nav-btn:hover {
   position: absolute;
   top: calc(100% + 10px);
   left: 0;
-  width: 220px;
+  width: 280px;
   background: var(--bg-nav);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 8px 12px;
+  padding: 8px 10px;
   opacity: 0;
   pointer-events: none;
   transform: translateY(-6px) scale(0.97);
@@ -352,6 +356,9 @@ body.light-theme .nav-btn:hover {
     opacity 0.2s ease,
     transform 0.2s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .search-popup.is-open {
@@ -361,13 +368,13 @@ body.light-theme .nav-btn:hover {
 }
 
 .search-input {
-  width: 100%;
+  flex: 1;
   background: var(--search-bg);
   border: 1px solid var(--search-border);
   border-radius: 8px;
-  padding: 7px 12px;
+  padding: 7px 10px;
   color: var(--text-primary);
-  font-family: "Barlow", sans-serif;
+  font-family: inherit;
   font-size: 13px;
   outline: none;
   transition: border-color var(--transition);
@@ -379,6 +386,50 @@ body.light-theme .nav-btn:hover {
 
 .search-input::placeholder {
   color: var(--text-muted);
+}
+
+/* Custom Search UI Elements */
+.search-counter {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  min-width: 32px;
+  text-align: center;
+}
+
+.search-nav-arrow {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background var(--transition), color var(--transition);
+}
+
+.search-nav-arrow:hover {
+  background: var(--btn-hover-bg);
+  color: var(--text-primary);
+}
+
+body.light-theme .search-nav-arrow:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Text Highlights */
+mark.find-highlight {
+  background-color: #ffd54f;
+  color: #000;
+  padding: 0;
+  border-radius: 2px;
+}
+
+mark.find-highlight.active-match {
+  background-color: #ff9800;
+  color: #fff;
 }
 
 /* =========================================
@@ -416,8 +467,8 @@ body.light-theme .nav-btn:hover {
 .theme-icon--sun,
 .theme-icon--moon {
   position: absolute;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -426,60 +477,57 @@ body.light-theme .nav-btn:hover {
 }
 
 .theme-icon--sun {
-  left: 6px;
-  color: #f0c040;
+  left: 5px;
+  color: #9ea3ab;
+  z-index: 2;
 }
 
 /* Moon icon – right side */
 .theme-icon--moon {
-  right: 6px;
-  color: #aaaacc;
+  right: 5px;
+  color: #ffffff;
+  z-index: 2;
 }
 
 /* Knob */
 .theme-toggle__knob {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: var(--knob-color);
   box-shadow: var(--knob-shadow);
-  left: 4px;
+  left: 5px;
+  transform: translateX(22px);
   transition:
     transform var(--transition),
     background var(--transition);
   z-index: 1;
 }
 
-/* Light theme: knob slides right */
+/* Light theme: knob slides left */
 body.light-theme .theme-toggle__knob {
-  transform: translateX(28px);
+  transform: translateX(0);
 }
 
 body:not(.light-theme) .theme-icon--sun {
   opacity: 1;
   color: #9ea3ab;
-  background: transparent;
 }
 
 body:not(.light-theme) .theme-icon--moon {
   opacity: 1;
-  background: #141414;
   color: #ffffff;
-  z-index: 2;
 }
 
 body.light-theme .theme-icon--sun {
   opacity: 1;
-  background: #ffffff;
   color: #141414;
-  z-index: 2;
 }
 
 body.light-theme .theme-icon--moon {
   opacity: 1;
   color: #9ea3ab;
-  background: transparent;
 }
 
 /* =========================================
@@ -1541,6 +1589,7 @@ body.light-theme .project-modal__content {
   margin-top: 80px;
   color: #fff;
   margin-bottom: 80px;
+  scroll-margin-top: 120px;
 }
 
 .contact-card-redesign {
@@ -1724,4 +1773,30 @@ body.light-theme .project-modal__content {
   .animated-arrows {
     font-size: 1.5rem;
   }
+}
+
+/* Floating WhatsApp Button */
+.floating-wa {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+}
+
+.floating-wa:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  color: white;
 }

@@ -7,6 +7,8 @@
   "use strict";
 
   const THEME_KEY = "dc-creed-theme";
+  const FONT_AWESOME_HREF =
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css";
 
   // 1. Immediately apply saved theme to prevent visual flash
   const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
@@ -30,6 +32,19 @@
         if (callback) callback();
       })
       .catch((err) => console.error(err));
+  }
+
+  function ensureFontAwesome() {
+    const existing = document.querySelector(
+      `link[rel="stylesheet"][href="${FONT_AWESOME_HREF}"]`,
+    );
+
+    if (existing) return;
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = FONT_AWESOME_HREF;
+    document.head.appendChild(link);
   }
 
   // Initialize Navbar events & toggles
@@ -75,8 +90,148 @@
         if (e.key === "Escape") {
           searchPopup.classList.remove("is-open");
           searchInput.blur();
+          clearHighlights();
         }
       });
+
+      // --- Search Custom Replica UI Logic ---
+      let matches = [];
+      let currentMatchIndex = -1;
+      const searchCounter = document.getElementById("searchCounter");
+      const searchNext = document.getElementById("searchNext");
+      const searchPrev = document.getElementById("searchPrev");
+
+      function clearHighlights() {
+        // Find all <mark class="find-highlight"> and unwrap them
+        const marks = document.querySelectorAll('mark.find-highlight');
+        marks.forEach(mark => {
+          const parent = mark.parentNode;
+          if (parent) {
+            parent.replaceChild(document.createTextNode(mark.textContent), mark);
+            parent.normalize();
+          }
+        });
+        matches = [];
+        currentMatchIndex = -1;
+        updateCounter();
+      }
+
+      function highlightText(query) {
+        clearHighlights();
+        if (!query) return;
+
+        // Escape regex special characters
+        const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escapedQuery})`, 'gi');
+        
+        // TreeWalker to iterate only through text nodes
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+          acceptNode: function(node) {
+            const parent = node.parentNode;
+            // Ignore script, style, and already marked elements
+            if (['SCRIPT', 'STYLE', 'MARK', 'NOSCRIPT'].includes(parent.tagName)) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            return regex.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+          }
+        });
+
+        const textNodes = [];
+        let nextNode;
+        while ((nextNode = walker.nextNode())) {
+          textNodes.push(nextNode);
+        }
+
+        textNodes.forEach(node => {
+          const text = node.nodeValue;
+          regex.lastIndex = 0;
+          let match;
+          let lastIndex = 0;
+          const frag = document.createDocumentFragment();
+
+          while ((match = regex.exec(text)) !== null) {
+            if (match.index > lastIndex) {
+              frag.appendChild(document.createTextNode(text.substring(lastIndex, match.index)));
+            }
+            const mark = document.createElement('mark');
+            mark.className = 'find-highlight';
+            mark.textContent = match[0];
+            frag.appendChild(mark);
+            matches.push(mark);
+            lastIndex = regex.lastIndex;
+          }
+          if (lastIndex < text.length) {
+            frag.appendChild(document.createTextNode(text.substring(lastIndex)));
+          }
+          node.parentNode.replaceChild(frag, node);
+        });
+
+        if (matches.length > 0) {
+          currentMatchIndex = 0;
+          focusMatch(0);
+        }
+        updateCounter();
+      }
+
+      function focusMatch(index) {
+        if (matches.length === 0) return;
+        matches.forEach(m => m.classList.remove('active-match'));
+        let m = matches[index];
+        m.classList.add('active-match');
+        
+        // Calculate offset so we don't hide under the sticky navbar
+        const navbarHeight = 80;
+        const rect = m.getBoundingClientRect();
+        const absoluteY = window.pageYOffset + rect.top;
+        window.scrollTo({
+          top: absoluteY - navbarHeight - 40,
+          behavior: 'smooth'
+        });
+        updateCounter();
+      }
+
+      function updateCounter() {
+        if (!searchCounter) return;
+        if (matches.length === 0) {
+          searchCounter.textContent = searchInput.value.trim() ? "0/0" : "";
+        } else {
+          searchCounter.textContent = `${currentMatchIndex + 1}/${matches.length}`;
+        }
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        highlightText(e.target.value.trim());
+      });
+
+      searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          if (matches.length > 0) {
+            currentMatchIndex = e.shiftKey
+              ? (currentMatchIndex - 1 + matches.length) % matches.length
+              : (currentMatchIndex + 1) % matches.length;
+            focusMatch(currentMatchIndex);
+          }
+        }
+      });
+
+      if (searchNext) {
+        searchNext.addEventListener("click", () => {
+          if (matches.length > 0) {
+            currentMatchIndex = (currentMatchIndex + 1) % matches.length;
+            focusMatch(currentMatchIndex);
+          }
+        });
+      }
+
+      if (searchPrev) {
+        searchPrev.addEventListener("click", () => {
+          if (matches.length > 0) {
+            currentMatchIndex = (currentMatchIndex - 1 + matches.length) % matches.length;
+            focusMatch(currentMatchIndex);
+          }
+        });
+      }
     }
 
     // Active Nav Links Clicking
@@ -133,6 +288,26 @@
     const cols = document.querySelectorAll(".footer-col");
     const emailLink = document.querySelector(".footer-email");
     const yearEl = document.querySelector(".footer-year");
+    const footer = document.querySelector(".site-footer");
+    const waButton = document.querySelector(".floating-wa");
+
+    // Observer to manage WhatsApp button scroll boundary
+    if (footer && waButton) {
+      window.addEventListener("scroll", () => {
+        const footerRect = footer.getBoundingClientRect();
+        
+        // If footer's top edge enters the viewport
+        if (footerRect.top < window.innerHeight) {
+          // Calculate the overlap distance
+          const overlap = window.innerHeight - footerRect.top;
+          // Apply initial 30px offset + overlap
+          waButton.style.bottom = (30 + overlap) + "px";
+        } else {
+          // Reset to default if footer is not in view
+          waButton.style.bottom = "30px";
+        }
+      }, { passive: true });
+    }
 
     // Reveal Animation
     if (cols.length) {
@@ -364,7 +539,9 @@
     );
 
     revealEls.forEach((el, index) => {
-      el.dataset.revealDelay = index * 80;
+      if (!el.hasAttribute("data-reveal-delay")) {
+        el.dataset.revealDelay = index * 80;
+      }
       observer.observe(el);
     });
   }
@@ -373,6 +550,8 @@
   function init() {
     const isRoot = !window.location.pathname.includes("/html/");
     const pathPrefix = isRoot ? "" : "../";
+
+    ensureFontAwesome();
 
     // Init scroll reveal for elements already in DOM
     initScrollReveal();
@@ -391,6 +570,11 @@
             '.navbar__menu .nav-btn[href="index.html"]',
           );
           if (worksLink) worksLink.setAttribute("href", "../index.html");
+
+          const contactLink = document.querySelector(
+            '.navbar__menu .nav-btn[href="index.html#contact"]',
+          );
+          if (contactLink) contactLink.setAttribute("href", "../index.html#contact");
 
           // Perbaiki link untuk halaman subfolder
           const htmlLinks = document.querySelectorAll(
@@ -411,6 +595,13 @@
             worksLink.setAttribute("href", "#");
             worksLink.classList.add("nav-btn--active");
           }
+
+          const contactLink = document.querySelector(
+            '.navbar__menu .nav-btn[href="index.html#contact"]',
+          );
+          if (contactLink) {
+            contactLink.setAttribute("href", "#contact");
+          }
         }
 
         // Setup theme/search/hamburger handlers
@@ -426,6 +617,16 @@
         initFooterHandlers();
         // Also run scroll reveal again after footer is injected into DOM
         initScrollReveal();
+
+        // Fix scroll position for cross-page anchor links (e.g. #contact)
+        if (window.location.hash) {
+          setTimeout(() => {
+            const target = document.querySelector(window.location.hash);
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 200); // Wait for DOM layout to settle after fetching components
+        }
       },
     );
 

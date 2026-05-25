@@ -6,9 +6,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&family=Poppins:wght@400;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/AboutUS.css" />
     <title>Document</title>
@@ -17,7 +18,7 @@
     <!-- Navbar -->
     <div id="navbar-placeholder"></div>
     <!-- Page Header -->
-    <header class="about-hero">
+    <header class="about-hero fade-in-on-load" style="animation-duration: 1s;">
       <div class="about-hero__inner">
         <h1 class="about-hero__title">Who We Are</h1>
       </div>
@@ -28,7 +29,7 @@
         <!-- Teks Judul -->
 
         <!-- Bungkus gambar di dalam div baru agar mudah diatur -->
-        <div class="about-hero__image-wrapper">
+        <div class="about-hero__image-wrapper fade-in-on-load" style="animation-duration: 1s; animation-delay: 0.2s;">
           <!-- Pastikan path gambarnya benar. Karena file HTML ada di dalam folder 'html', gunakan tanda '../' untuk mundur 1 folder terlebih dahulu -->
           <img
             src="../aboutus-img/10YEars.png"
@@ -38,11 +39,11 @@
         </div>
         <!-- Tambahkan Teks Di Sini -->
         <div class="about-hero__description">
-          <p>
+          <p class="scroll-reveal" data-reveal-delay="300" style="transition-duration: 1.2s;">
             We are a creative agency specializing in event management, media
             strategies, video production, and advertising
           </p>
-          <p>
+          <p class="scroll-reveal" data-reveal-delay="800" style="transition-duration: 1.2s;">
             We are currently based in Kuala Lumpur, Johor Bahru and Kuching. We
             create memorable events, comprehensive media strategies and
             meaningful videos that empower and help our clients achieve their
@@ -50,12 +51,12 @@
             agencies is our unique management team. It comprises specialists in
             their own fields
           </p>
-          <p>
+          <p class="scroll-reveal" data-reveal-delay="1300" style="transition-duration: 1.2s;">
             To us, ‘Age Is Just A Numberʼ. We move as one with the ultimate goal
             of giving our clients the best regardless of project size and scope
           </p>
         </div>
-        <div class="about-hero-down">
+        <div class="about-hero-down scroll-reveal">
           <div class="about-hero__inner-down">
             <p class="about-hero__eyebrow-down">From creative ideas to</p>
             <h1 class="about-hero__title-down">memorable experience</h1>
@@ -63,7 +64,7 @@
         </div>
 
         <!-- Stats Card / Odometer -->
-        <div class="about-hero__stats-wrapper">
+        <div class="about-hero__stats-wrapper scroll-reveal">
           <div class="image-map-container">
             <!-- Angka target diatur melalui atribut data-target="100" -->
             <h2 class="counter-overlay counter-up" data-target="100">0</h2>
