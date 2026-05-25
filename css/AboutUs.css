@@ -15,7 +15,7 @@
 .about-hero__title {
   font-family: Poppins;
   font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   line-height: 1.1;
@@ -45,14 +45,14 @@
    ========================================= */
 .about-hero__description {
   /* Membatasi lebar teks agar tidak terlalu panjang ke samping (lebih enak dibaca) */
-  max-width: 800px;
+  max-width: 700px;
 
   /* margin: atas kanan bawah kiri -> auto di kanan-kiri membuatnya rata tengah */
   margin: 40px auto 0 auto;
 
   text-align: center;
-  font-family: "Barlow", sans-serif; /* Menggunakan font dari project Anda */
-  font-size: 1.1rem;
+  font-family: "Inter", sans-serif; /* Menggunakan font dari project Anda */
+  font-size: 1.3rem;
   line-height: 1.6;
   color: var(
     --text-primary
@@ -80,7 +80,7 @@
 .about-hero__eyebrow-down {
   font-family: "Poppins", sans-serif;
   font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   line-height: 1.1;
@@ -90,7 +90,7 @@
 .about-hero__title-down {
   font-family: "Poppins", sans-serif;
   font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--accent-red);
   letter-spacing: -0.01em;
   line-height: 1.1;

@@ -25,7 +25,7 @@
 .client-hero__title {
   font-family: "Poppins", sans-serif;
   font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   line-height: 1.1;
@@ -63,6 +63,18 @@
   align-items: center;
   width: 100%;
   height: 80px;
+
+  /* Initial State for Animation */
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 2s ease-out,
+    transform 2s ease-out;
+}
+
+.clients-board.animate .client-logo-wrapper {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .client-logo-img {

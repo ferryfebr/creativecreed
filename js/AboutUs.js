@@ -4,7 +4,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const counters = document.querySelectorAll(".counter-up");
-  const speed = 100; // Semakin kecil angkanya, semakin cepat nambah angkanya
+  const speed = 130; // Semakin kecil angkanya, semakin cepat nambah angkanya
 
   const animateCounter = (counter) => {
     const target = +counter.getAttribute("data-target");
@@ -38,8 +38,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        // Ketika card terlihat, jalankan fungsi animateCounter
-        animateCounter(entry.target);
+        // Cek apakah ada delay dari parent scroll-reveal
+        const revealParent = entry.target.closest(".scroll-reveal");
+        const delay = revealParent
+          ? Number(revealParent.getAttribute("data-reveal-delay") || 0)
+          : 0;
+
+        // Tunggu hingga delay kemunculan selesai sebelum memulai animasi angka
+        setTimeout(() => {
+          animateCounter(entry.target);
+        }, delay);
+
         // Hentikan pantauan agar animasi tidak berulang saat discroll ulang
         observer.unobserve(entry.target);
       }

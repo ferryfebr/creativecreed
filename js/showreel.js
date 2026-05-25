@@ -32,6 +32,8 @@
         ? muteBtn.querySelector(".vc__icon--muted")
         : null;
 
+      const volSlider = controls.querySelector('[data-action="volume"]');
+
       const fullscreenBtn = controls.querySelector(
         '[data-action="fullscreen"]',
       );
@@ -53,13 +55,17 @@
 
       // Sync Mute/Unmute UI state with video state
       function updateMuteUI() {
-        if (!volIcon || !muteIcon) return;
-        if (video.muted) {
-          volIcon.style.display = "none";
-          muteIcon.style.display = "block";
-        } else {
-          volIcon.style.display = "block";
-          muteIcon.style.display = "none";
+        if (volIcon && muteIcon) {
+          if (video.muted || video.volume === 0) {
+            volIcon.style.display = "none";
+            muteIcon.style.display = "block";
+          } else {
+            volIcon.style.display = "block";
+            muteIcon.style.display = "none";
+          }
+        }
+        if (volSlider) {
+          volSlider.value = video.muted ? 0 : video.volume;
         }
       }
 
@@ -99,6 +105,20 @@
         muteBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           video.muted = !video.muted;
+        });
+      }
+
+      // Volume slider interaction
+      if (volSlider) {
+        volSlider.addEventListener("input", (e) => {
+          e.stopPropagation();
+          const newVol = parseFloat(e.target.value);
+          video.volume = newVol;
+          if (newVol > 0) {
+            video.muted = false;
+          } else {
+            video.muted = true;
+          }
         });
       }
 
