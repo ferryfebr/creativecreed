@@ -168,7 +168,6 @@ body {
   transition:
     background var(--transition),
     box-shadow var(--transition);
-  animation: fadeInOnLoad 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .navbar__inner {
@@ -190,8 +189,8 @@ body {
   text-decoration: none;
   flex-shrink: 0;
   user-select: none;
-  width: 200px;
-  height: 30px;
+  width: 300px;
+  height: 45px;
   background-image: var(--logo-image);
   background-size: contain;
   background-position: left center;
@@ -801,14 +800,15 @@ a {
 .footer-logo {
   display: block;
   text-decoration: none;
-  margin-bottom: calc(var(--spacing-md) * var(--footer-scale));
-  width: 250px;
-  height: 45px;
+  /* margin-bottom: calc(var(--spacing-md) * var(--footer-scale)); */
+  width: 375px;
+  height: 67.5px;
   background-image: var(--logo-image);
   background-size: contain;
   background-position: left center;
   background-repeat: no-repeat;
   transition: background-image var(--transition);
+  margin-bottom: -70px;
 }
 
 .logo-dc {
