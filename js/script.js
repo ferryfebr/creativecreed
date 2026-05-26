@@ -438,6 +438,14 @@
       videoSource.src = imgSrc;
       modalVideo.load();
 
+      // Attempt to autoplay the video after user click (user gesture)
+      // Use promise handling to avoid unhandled rejection in some browsers
+      if (modalVideo && typeof modalVideo.play === 'function') {
+        modalVideo.play().catch(() => {
+          // Auto-play may be blocked by browser; ignore silently
+        });
+      }
+
       const rect = card.getBoundingClientRect();
       modalExpandBg.style.top = rect.top + "px";
       modalExpandBg.style.left = rect.left + "px";
@@ -466,6 +474,15 @@
     }
 
     function closeModal() {
+      // Pause and reset video playback when closing
+      try {
+        if (modalVideo) {
+          modalVideo.pause();
+          modalVideo.currentTime = 0;
+        }
+      } catch (err) {
+        // ignore
+      }
       modal.classList.remove("is-active");
       setTimeout(() => {
         modal.classList.remove("is-animating");
