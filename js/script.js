@@ -301,7 +301,7 @@
           // Calculate the overlap distance
           const overlap = window.innerHeight - footerRect.top;
           // Apply initial 30px offset + overlap
-          waButton.style.bottom = (30 + overlap) + "px";
+          waButton.style.bottom = ( -30 + overlap) + "px";
         } else {
           // Reset to default if footer is not in view
           waButton.style.bottom = "30px";
