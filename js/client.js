@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   const logos = document.querySelectorAll(".client-logo-wrapper");
-  const columnsPerRow = 6; // Karena grid menggunakan repeat(6, 1fr)
-
   logos.forEach((logo, index) => {
     // Menghitung baris ke berapa logo ini berada (mulai dari 0)
-    const rowIndex = Math.floor(index / columnsPerRow);
+    // Baris 1-3 masing-masing 6 logo (index 0-17)
+    // Baris 4 berisi 7 logo sisanya (index 18-24)
+    let rowIndex;
+    if (index < 18) {
+      rowIndex = Math.floor(index / 6);
+    } else {
+      rowIndex = 3;
+    }
 
-    // Memberikan delay berdasarkan baris: baris 0 delay 0s, baris 1 delay 0.2s, baris 2 delay 0.4s, dst.
+    // Memberikan delay berdasarkan baris
     logo.style.transitionDelay = `${rowIndex * 0.7}s`;
   });
 

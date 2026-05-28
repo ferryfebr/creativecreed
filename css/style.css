@@ -146,7 +146,7 @@ body {
   background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: scroll;
   color: var(--text-primary);
   min-height: 100vh;
   transition:
