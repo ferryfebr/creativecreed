@@ -9,8 +9,8 @@
   /* -------------------------------------------------- *
    * 1. SHOWREEL CUSTOM VIDEO CONTROLS
    * -------------------------------------------------- */
-  function initShowreelVideo() {
-    const slides = document.querySelectorAll(".showreel-slide");
+  function initShowreelVideo(slidesList) {
+    const slides = slidesList || document.querySelectorAll(".showreel-slide");
     if (!slides.length) return;
 
     slides.forEach((slide) => {
@@ -200,73 +200,190 @@
 
     if (!track || !prevBtn || !nextBtn) return;
 
-    const slides = document.querySelectorAll(".showreel-slide");
+    const originalSlides = Array.from(track.querySelectorAll(".showreel-slide"));
+    const total = originalSlides.length;
+    if (total < 2) return;
+
+    // 1. Perform Cloning for Seamless Infinite Loop
+    const firstClone = originalSlides[0].cloneNode(true);
+    const lastClone = originalSlides[total - 1].cloneNode(true);
+
+    firstClone.classList.add("is-clone");
+    lastClone.classList.add("is-clone");
+
+    // Append and prepend clones to track
+    track.appendChild(firstClone);
+    track.insertBefore(lastClone, originalSlides[0]);
+
+    // Now query all slides (including clones)
+    const slides = track.querySelectorAll(".showreel-slide");
     const dots = document.querySelectorAll(".slider-dot");
     const counter = document.getElementById("slideCounter");
-    const total = slides.length;
-    let currentIndex = 0;
+    
+    // Initialize custom video controls on all slides (including clones)
+    initShowreelVideo(slides);
 
-    function updateSlider() {
-      // Geser track ke slide yang aktif
-      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    let currentIndex = 0; // 0 to total - 1
+    let trackIndex = 1;   // 1 to total (0 is lastClone, total+1 is firstClone)
+    let isTransitioning = false;
 
-      // Pause semua video, play video aktif, dan toggle class is-active
+    // Set initial track transform (translate by 1 slide width to show first real slide)
+    const videoContainer = document.getElementById("videoContainer");
+    function getSlideWidth() {
+      if (!videoContainer) return 0;
+      return videoContainer.getBoundingClientRect().width;
+    }
+
+    function updateSlideWidths() {
+      const slideWidth = getSlideWidth();
+      slides.forEach((slide) => {
+        slide.style.width = `${slideWidth}px`;
+      });
+    }
+
+    updateSlideWidths();
+    track.style.transition = "none";
+    track.style.transform = `translateX(-${trackIndex * getSlideWidth()}px)`;
+    track.offsetHeight; // force reflow
+
+    function updateSlider(targetTrackIndex, animate = true) {
+      if (animate) {
+        track.style.transition = "transform 0.5s ease-in-out";
+        isTransitioning = true;
+      } else {
+        track.style.transition = "none";
+      }
+
+      track.style.transform = `translateX(-${targetTrackIndex * getSlideWidth()}px)`;
+      trackIndex = targetTrackIndex;
+
+      // Map trackIndex back to currentIndex (0 to total - 1)
+      if (trackIndex === 0) {
+        currentIndex = total - 1;
+      } else if (trackIndex === total + 1) {
+        currentIndex = 0;
+      } else {
+        currentIndex = trackIndex - 1;
+      }
+
+      // Update active state and video playback
       slides.forEach((slide, i) => {
         const vid = slide.querySelector(".slider-video");
-        const isActive = i === currentIndex;
+        const isActive = i === targetTrackIndex;
 
         slide.classList.toggle("is-active", isActive);
 
         if (vid) {
           if (isActive) {
-            vid.currentTime = 0;
-            vid.play().catch(() => {}); // catch jika browser blokir autoplay
+            // Always play muted on transition to comply with browser autoplay and user requirements
+            vid.muted = true;
+            if (vid.paused) {
+              vid.currentTime = 0;
+              vid.play().catch(() => {});
+            }
           } else {
             vid.pause();
           }
         }
       });
 
-      // Update dot aktif
+      // Update active dot indicator
       dots.forEach((dot, i) => {
         dot.classList.toggle("slider-dot--active", i === currentIndex);
       });
 
-      // Update counter
+      // Update slide counter text
       if (counter) {
         counter.textContent = `${currentIndex + 1} / ${total}`;
       }
     }
 
-    // Tombol panah kiri
+    // Prev Button Click Handler
     prevBtn.addEventListener("click", () => {
-      currentIndex = currentIndex > 0 ? currentIndex - 1 : total - 1;
-      updateSlider();
+      if (isTransitioning) return;
+      updateSlider(trackIndex - 1);
     });
 
-    // Tombol panah kanan
+    // Next Button Click Handler
     nextBtn.addEventListener("click", () => {
-      currentIndex = currentIndex < total - 1 ? currentIndex + 1 : 0;
-      updateSlider();
+      if (isTransitioning) return;
+      updateSlider(trackIndex + 1);
     });
 
-    // Klik dot → loncat ke slide tertentu
+    // Dot Navigation Click Handler
     dots.forEach((dot) => {
       dot.addEventListener("click", () => {
-        currentIndex = parseInt(dot.dataset.index, 10);
-        updateSlider();
+        if (isTransitioning) return;
+        const targetIndex = parseInt(dot.dataset.index, 10);
+        updateSlider(targetIndex + 1);
       });
     });
 
-    // Inisialisasi awal — pastikan video pertama play
-    updateSlider();
+    // transitionend event: boundary check and instant snap to counterpart
+    track.addEventListener("transitionend", () => {
+      isTransitioning = false;
+
+      if (trackIndex === 0) {
+        // Snapping from lastClone to real last slide
+        const cloneVid = slides[0].querySelector(".slider-video");
+        const realVid = slides[total].querySelector(".slider-video");
+
+        track.style.transition = "none";
+        trackIndex = total;
+        track.style.transform = `translateX(-${trackIndex * getSlideWidth()}px)`;
+        track.offsetHeight; // force reflow
+
+        // Sync active state class
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("is-active", i === trackIndex);
+        });
+
+        // Sync playing states and playback position seamlessly
+        if (cloneVid && realVid) {
+          realVid.currentTime = cloneVid.currentTime;
+          realVid.muted = true;
+          realVid.play().catch(() => {});
+          cloneVid.pause();
+        }
+      } else if (trackIndex === total + 1) {
+        // Snapping from firstClone to real first slide
+        const cloneVid = slides[total + 1].querySelector(".slider-video");
+        const realVid = slides[1].querySelector(".slider-video");
+
+        track.style.transition = "none";
+        trackIndex = 1;
+        track.style.transform = `translateX(-${trackIndex * getSlideWidth()}px)`;
+        track.offsetHeight; // force reflow
+
+        // Sync active state class
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("is-active", i === trackIndex);
+        });
+
+        // Sync playing states and playback position seamlessly
+        if (cloneVid && realVid) {
+          realVid.currentTime = cloneVid.currentTime;
+          realVid.muted = true;
+          realVid.play().catch(() => {});
+          cloneVid.pause();
+        }
+      }
+    });
+
+    // Handle Window Resize to keep alignment accurate
+    window.addEventListener("resize", () => {
+      updateSlideWidths();
+      updateSlider(trackIndex, false);
+    });
+
+    // Initialize position and first video playback state
+    updateSlider(trackIndex, false);
   }
 
   /* -------------------------------------------------- *
-   * INIT — jalankan setelah DOM siap
+   * INIT — run when DOM ready
    * -------------------------------------------------- */
   function init() {
-    initShowreelVideo();
     initShowreelSlider();
 
     // Menangani Spacebar untuk Play/Pause video yang sedang aktif
