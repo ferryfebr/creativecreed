@@ -279,16 +279,20 @@
         document.body.style.overflow = "";
       };
 
-      hamburger.addEventListener("click", () => {
+      hamburger.addEventListener("click", (e) => {
+        e.stopPropagation();
         hamburger.classList.toggle("is-open");
         navMenu.classList.toggle("is-open");
-        document.body.style.overflow = navMenu.classList.contains("is-open")
-          ? "hidden"
-          : "";
       });
 
       navLinks.forEach((link) => {
         link.addEventListener("click", closeMobileMenu);
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!navMenu.classList.contains("is-open")) return;
+        if (navbar.contains(e.target)) return;
+        closeMobileMenu();
       });
 
       window.addEventListener("resize", () => {

@@ -9,8 +9,37 @@
 
     <!-- Nav Items -->
     <ul class="navbar__menu" id="navMenu">
-      <!-- Search Button -->
-      <li class="nav-item nav-item--search">
+      <li class="nav-item">
+        <a href="index.html" class="nav-btn">Works</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="html/showreel.html" class="nav-btn nav-btn--badge">
+          Showreel
+          <i class="fa-solid fa-video badge-icon" aria-hidden="true"></i>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="html/services.html" class="nav-btn">Services</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="html/AboutUs.html" class="nav-btn">About Us</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="html/client.html" class="nav-btn">Our Clients</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="index.html#contact" class="nav-btn">Contact Us</a>
+      </li>
+    </ul>
+
+    <!-- Search, theme toggle, hamburger -->
+    <div class="navbar__toolbar">
+      <div class="nav-item nav-item--search">
         <button
           class="nav-btn nav-btn--icon"
           id="searchToggle"
@@ -32,7 +61,6 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
         </button>
-        <!-- Search input (hidden by default) -->
         <div class="search-popup" id="searchPopup">
           <input
             type="text"
@@ -80,41 +108,12 @@
             </svg>
           </button>
         </div>
-      </li>
+      </div>
 
-      <li class="nav-item">
-        <a href="index.html" class="nav-btn">Works</a>
-      </li>
-
-      <li class="nav-item">
-        <a href="html/showreel.html" class="nav-btn nav-btn--badge">
-          Showreel
-          <i class="fa-solid fa-video badge-icon" aria-hidden="true"></i>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="html/services.html" class="nav-btn">Services</a>
-      </li>
-
-      <li class="nav-item">
-        <a href="html/AboutUs.html" class="nav-btn">About Us</a>
-      </li>
-
-      <li class="nav-item">
-        <a href="html/client.html" class="nav-btn">Our Clients</a>
-      </li>
-
-      <li class="nav-item">
-        <a href="index.html#contact" class="nav-btn">Contact Us</a>
-      </li>
-
-      <!-- Theme Toggle -->
-      <li class="nav-item nav-item--theme">
+      <div class="nav-item nav-item--theme">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
           <span class="theme-toggle__track">
             <span class="theme-icon theme-icon--sun">
-              <!-- Sun -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="13"
@@ -138,7 +137,6 @@
               </svg>
             </span>
             <span class="theme-icon theme-icon--moon">
-              <!-- Moon -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="13"
@@ -152,14 +150,13 @@
             <span class="theme-toggle__knob"></span>
           </span>
         </button>
-      </li>
-    </ul>
+      </div>
 
-    <!-- Hamburger (mobile) -->
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </div>
 </nav>
