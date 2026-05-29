@@ -1466,9 +1466,27 @@ body.light-theme .creative-solutions {
     text-align: left;
   }
 
+  /* 4-column trick: each card spans 2 of 4 cols = visually 2 per row */
   .projects-grid {
     padding: 0;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px 6px;
+    margin-bottom: 20px;
+  }
+
+  .projects-grid .project-card {
+    grid-column: span 2;
+  }
+
+  /* Last card alone: place at cols 2-3 of 4 = visually centered */
+  .projects-grid .project-card:last-child:nth-child(odd) {
+    grid-column: 2 / 4;
+  }
+
+  /* Prevent hidden extra cards from creating blank row space */
+  .project-card--extra:not(.is-visible) {
+    margin-bottom: 0;
+    margin-top: 0;
   }
 }
 
