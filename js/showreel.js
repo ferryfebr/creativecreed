@@ -6,6 +6,84 @@
 (function () {
   "use strict";
 
+  function getFullscreenElement() {
+    return (
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.msFullscreenElement ||
+      null
+    );
+  }
+
+  function requestVideoFullscreen(video) {
+    if (!video) return false;
+
+    /* iOS Safari: native video player fullscreen */
+    if (typeof video.webkitEnterFullscreen === "function") {
+      video.webkitEnterFullscreen();
+      return true;
+    }
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+      return true;
+    }
+
+    if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
+      return true;
+    }
+
+    if (video.msRequestFullscreen) {
+      video.msRequestFullscreen();
+      return true;
+    }
+
+    return false;
+  }
+
+  function requestElementFullscreen(element) {
+    if (!element) return false;
+
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+      return true;
+    }
+
+    if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+      return true;
+    }
+
+    if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+      return true;
+    }
+
+    return false;
+  }
+
+  function exitAnyFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
+
+  function toggleFullscreen(video, fallbackEl) {
+    if (getFullscreenElement()) {
+      exitAnyFullscreen();
+      return;
+    }
+
+    if (!requestVideoFullscreen(video)) {
+      requestElementFullscreen(fallbackEl);
+    }
+  }
+
   /* -------------------------------------------------- *
    * 1. SHOWREEL CUSTOM VIDEO CONTROLS
    * -------------------------------------------------- */
@@ -166,25 +244,15 @@
         });
       }
 
-      // Fullscreen Action
+      // Fullscreen (video-first for mobile / iOS; container fallback on desktop)
       if (fullscreenBtn) {
+        const fullscreenFallback =
+          slide.closest(".showreel-container") || slide;
+
         fullscreenBtn.addEventListener("click", (e) => {
+          e.preventDefault();
           e.stopPropagation();
-          if (!document.fullscreenElement) {
-            if (slide.requestFullscreen) {
-              slide.requestFullscreen();
-            } else if (slide.webkitRequestFullscreen) {
-              slide.webkitRequestFullscreen();
-            } else if (slide.msRequestFullscreen) {
-              slide.msRequestFullscreen();
-            }
-          } else {
-            if (document.exitFullscreen) {
-              document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) {
-              document.webkitExitFullscreen();
-            }
-          }
+          toggleFullscreen(video, fullscreenFallback);
         });
       }
     });
