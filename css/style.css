@@ -1749,6 +1749,76 @@ body.light-theme .project-modal__content {
   text-align: justify;
 }
 
+/* =========================================
+   PROJECT MODAL - MOBILE RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+  .project-modal__content-wrapper {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .project-modal__content {
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .project-modal__close {
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .project-modal__body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .project-modal__media {
+    width: 100%;
+    height: 280px;
+    flex-shrink: 0;
+    min-height: 280px;
+  }
+
+  .project-modal__media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-modal__info {
+    flex: 1;
+    padding: 20px 16px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .project-modal__info h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .project-modal__info p {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    text-align: left;
+  }
+
+  .project-modal__expand-bg {
+    display: none;
+  }
+}
+
 /* Contact Section */
 .contact-section {
   padding: 12px 20px;
