@@ -173,6 +173,11 @@ body {
     background-position: top center;
     background-repeat: no-repeat;
   }
+
+  /* Light theme background asset needs extra help on mobile */
+  body.light-theme {
+    background-size: contain;
+  }
 }
 
 /* =========================================
