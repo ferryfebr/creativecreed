@@ -149,6 +149,11 @@
   max-width: 1200px;
 }
 
+/* Make wrapper a positioned parent so we can overlay arrows and close button */
+.showreel-slider-wrapper {
+  position: relative;
+}
+
 .slider-arrow {
   background: transparent;
   color: var(--text-primary);
@@ -385,4 +390,76 @@
   height: 80px;
   margin: 0;
   cursor: pointer;
+}
+
+/* Responsive: Mobile (≤768px) — desktop unchanged */
+@media (max-width: 768px) {
+  .showreel-page {
+    padding: 8px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    min-height: calc(100vh - 72px);
+    min-height: calc(100dvh - 72px);
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  /* Full-width video; prev/next in side gutters (not shrinking the player) */
+  .showreel-slider-wrapper {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+  }
+
+  .showreel-container {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    border-width: 1.5px;
+    background: transparent;
+    border-color: var(--border-color);
+    z-index: 5;
+  }
+
+  .slider-arrow-prev {
+    left: 0;
+  }
+
+  .slider-arrow-next {
+    right: 0;
+  }
+
+  .slider-arrow:hover {
+    transform: translateY(-50%);
+  }
+
+  /* X: pojok kanan layar (di bawah navbar), tidak overlap video/next */
+  .btn-close-showreel {
+    position: fixed;
+    top: calc(72px + 8px);
+    right: max(8px, env(safe-area-inset-right, 0px));
+    left: auto;
+    width: 44px;
+    height: 44px;
+    z-index: 101;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .btn-close-showreel svg {
+    width: 30px;
+    height: 30px;
+  }
 }
