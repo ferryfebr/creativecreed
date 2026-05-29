@@ -20,23 +20,31 @@
 
     /* iOS Safari: native video player fullscreen */
     if (typeof video.webkitEnterFullscreen === "function") {
-      video.webkitEnterFullscreen();
-      return true;
+      try {
+        video.webkitEnterFullscreen();
+        return true;
+      } catch (_) {}
     }
 
     if (video.requestFullscreen) {
-      video.requestFullscreen();
-      return true;
+      try {
+        video.requestFullscreen();
+        return true;
+      } catch (_) {}
     }
 
     if (video.webkitRequestFullscreen) {
-      video.webkitRequestFullscreen();
-      return true;
+      try {
+        video.webkitRequestFullscreen();
+        return true;
+      } catch (_) {}
     }
 
     if (video.msRequestFullscreen) {
-      video.msRequestFullscreen();
-      return true;
+      try {
+        video.msRequestFullscreen();
+        return true;
+      } catch (_) {}
     }
 
     return false;
@@ -46,18 +54,24 @@
     if (!element) return false;
 
     if (element.requestFullscreen) {
-      element.requestFullscreen();
-      return true;
+      try {
+        element.requestFullscreen();
+        return true;
+      } catch (_) {}
     }
 
     if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-      return true;
+      try {
+        element.webkitRequestFullscreen();
+        return true;
+      } catch (_) {}
     }
 
     if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-      return true;
+      try {
+        element.msRequestFullscreen();
+        return true;
+      } catch (_) {}
     }
 
     return false;
@@ -82,6 +96,17 @@
     if (!requestVideoFullscreen(video)) {
       requestElementFullscreen(fallbackEl);
     }
+  }
+
+  function isMobileViewport() {
+    return window.matchMedia("(max-width: 768px)").matches;
+  }
+
+  function isLandscapeOrientation() {
+    return (
+      window.matchMedia("(orientation: landscape)").matches ||
+      window.innerWidth > window.innerHeight
+    );
   }
 
   /* -------------------------------------------------- *
@@ -366,6 +391,33 @@
       }
     }
 
+    function getActiveSlide() {
+      return (
+        track.querySelector(".showreel-slide.is-active") ||
+        slides[trackIndex] ||
+        slides[1] ||
+        null
+      );
+    }
+
+    function tryAutoFullscreenLandscape() {
+      if (!isMobileViewport() || !isLandscapeOrientation()) return;
+      if (getFullscreenElement()) return;
+
+      const activeSlide = getActiveSlide();
+      if (!activeSlide) return;
+
+      const activeVideo = activeSlide.querySelector(".slider-video");
+      if (!activeVideo) return;
+
+      const fullscreenFallback =
+        activeSlide.closest(".showreel-container") || activeSlide;
+
+      if (!requestVideoFullscreen(activeVideo)) {
+        requestElementFullscreen(fullscreenFallback);
+      }
+    }
+
     // Prev Button Click Handler
     prevBtn.addEventListener("click", () => {
       if (isTransitioning) return;
@@ -442,10 +494,21 @@
     window.addEventListener("resize", () => {
       updateSlideWidths();
       updateSlider(trackIndex, false);
+      tryAutoFullscreenLandscape();
+    });
+
+    window.addEventListener("orientationchange", () => {
+      // Delay briefly so orientation/layout values are settled.
+      setTimeout(() => {
+        updateSlideWidths();
+        updateSlider(trackIndex, false);
+        tryAutoFullscreenLandscape();
+      }, 150);
     });
 
     // Initialize position and first video playback state
     updateSlider(trackIndex, false);
+    tryAutoFullscreenLandscape();
   }
 
   /* -------------------------------------------------- *
