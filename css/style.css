@@ -1184,6 +1184,11 @@ body.light-theme .youtube-btn:hover {
   .footer-col--location {
     padding-top: calc(var(--spacing-md) * var(--footer-scale));
     border-top: 1px solid var(--color-border);
+    padding-left: 0;
+  }
+
+  .footer-contacts {
+    padding-left: 0;
   }
 
   .footer-hiring {
@@ -1754,29 +1759,31 @@ body.light-theme .project-modal__content {
    ========================================= */
 @media (max-width: 768px) {
   .project-modal__content-wrapper {
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    max-height: 100vh;
-    border-radius: 0;
+    width: 85%;
+    max-width: 500px;
+    height: auto;
+    max-height: 90vh;
+    border-radius: 12px;
   }
 
   .project-modal__content {
-    border-radius: 0;
-    height: 100%;
+    border-radius: 12px;
+    height: auto;
+    max-height: 90vh;
   }
 
   .project-modal__close {
-    top: 16px;
-    right: 16px;
-    width: 36px;
-    height: 36px;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
   }
 
   .project-modal__body {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: auto;
+    max-height: 80vh;
     overflow: hidden;
   }
 
@@ -1794,7 +1801,7 @@ body.light-theme .project-modal__content {
   }
 
   .project-modal__info {
-    flex: 1;
+    max-height: 300px;
     padding: 20px 16px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;

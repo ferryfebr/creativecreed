@@ -446,31 +446,41 @@
         });
       }
 
-      const rect = card.getBoundingClientRect();
-      modalExpandBg.style.top = rect.top + "px";
-      modalExpandBg.style.left = rect.left + "px";
-      modalExpandBg.style.width = rect.width + "px";
-      modalExpandBg.style.height = rect.height + "px";
-
-      const wrapperWidth = Math.min(window.innerWidth * 0.50, 550);
-      const wrapperHeight = Math.min(window.innerHeight * 0.60, 600);
-      const wrapperLeft = (window.innerWidth - wrapperWidth) / 2;
-      const wrapperTop = Math.max((window.innerHeight - wrapperHeight) / 2, 40);
-
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.paddingRight = scrollbarWidth + "px";
-      modal.classList.add("is-animating");
       document.body.style.overflow = "hidden";
 
-      requestAnimationFrame(() => {
+      // Check if mobile
+      const isMobile = window.innerWidth <= 768;
+
+      if (!isMobile) {
+        // Desktop: expand animation from card position
+        const rect = card.getBoundingClientRect();
+        modalExpandBg.style.top = rect.top + "px";
+        modalExpandBg.style.left = rect.left + "px";
+        modalExpandBg.style.width = rect.width + "px";
+        modalExpandBg.style.height = rect.height + "px";
+
+        const wrapperWidth = Math.min(window.innerWidth * 0.50, 550);
+        const wrapperHeight = Math.min(window.innerHeight * 0.60, 600);
+        const wrapperLeft = (window.innerWidth - wrapperWidth) / 2;
+        const wrapperTop = Math.max((window.innerHeight - wrapperHeight) / 2, 40);
+
+        modal.classList.add("is-animating");
+
         requestAnimationFrame(() => {
-          modalExpandBg.style.top = wrapperTop + "px";
-          modalExpandBg.style.left = wrapperLeft + "px";
-          modalExpandBg.style.width = wrapperWidth + "px";
-          modalExpandBg.style.height = wrapperHeight + "px";
-          modal.classList.add("is-active");
+          requestAnimationFrame(() => {
+            modalExpandBg.style.top = wrapperTop + "px";
+            modalExpandBg.style.left = wrapperLeft + "px";
+            modalExpandBg.style.width = wrapperWidth + "px";
+            modalExpandBg.style.height = wrapperHeight + "px";
+            modal.classList.add("is-active");
+          });
         });
-      });
+      } else {
+        // Mobile: direct show without expand animation
+        modal.classList.add("is-active");
+      }
     }
 
     function closeModal() {
