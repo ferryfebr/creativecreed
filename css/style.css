@@ -205,6 +205,16 @@ body {
   body.page-clients.light-theme {
     --bg-image: url("../bg/bgwhite.jpg");
   }
+
+  /* Services & About Us: zoom in background on mobile (dark + light) */
+  body.page-services,
+  body.page-about,
+  body.page-services.light-theme,
+  body.page-about.light-theme {
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
 }
 
 /* =========================================
