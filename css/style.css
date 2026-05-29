@@ -1911,13 +1911,14 @@ body.light-theme .project-modal__content {
   background-origin: border-box;
   background-clip: padding-box, border-box;
   border: 7.5px solid transparent;
-  border-radius: 60px;
+  /* Desktop: sudut besar kiri-atas & kanan-bawah, sudut kecil kanan-atas & kiri-bawah */
+  border-radius: 125px 45px 125px 45px;
   text-align: center;
   overflow: hidden;
-  -webkit-border-radius: 60px;
-  -moz-border-radius: 60px;
-  -ms-border-radius: 60px;
-  -o-border-radius: 60px;
+  -webkit-border-radius: 125px 45px 125px 45px;
+  -moz-border-radius: 125px 45px 125px 45px;
+  -ms-border-radius: 125px 45px 125px 45px;
+  -o-border-radius: 125px 45px 125px 45px;
 }
 
 .contact-card-redesign::before {
