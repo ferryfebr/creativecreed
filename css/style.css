@@ -2079,3 +2079,9 @@ body.light-theme .project-modal__content {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
   color: white;
 }
+
+@media (max-width: 768px) {
+  .floating-wa {
+    z-index: 50;
+  }
+}

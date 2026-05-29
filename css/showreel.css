@@ -462,4 +462,9 @@
     width: 30px;
     height: 30px;
   }
+
+  .vc__btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
