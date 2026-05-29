@@ -18,20 +18,49 @@
     document.body.classList.remove("light-theme");
   }
 
-  // Helper to load component dynamically
-  function loadComponent(selector, url, callback) {
+  /** Root = index.html; subpages under html/ load script as ../js/script.js */
+  function getPathPrefix() {
+    const script = document.querySelector('script[src*="script.js"]');
+    const src = script ? script.getAttribute("src") || "" : "";
+    if (src.startsWith("../")) return "../";
+    const path = window.location.pathname.replace(/\\/g, "/");
+    if (/\/html\//i.test(path)) return "../";
+    return "";
+  }
+
+  function isRootPage() {
+    return getPathPrefix() === "";
+  }
+
+  // Helper to load component dynamically (tries fallback URLs for Live Server / path quirks)
+  function loadComponent(selector, urls, callback) {
     const el = document.querySelector(selector);
     if (!el) return;
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) throw new Error(`Failed to load ${url}`);
-        return response.text();
-      })
-      .then((html) => {
-        el.outerHTML = html;
-        if (callback) callback();
-      })
-      .catch((err) => console.error(err));
+
+    const list = Array.isArray(urls) ? urls : [urls];
+
+    function tryLoad(index) {
+      if (index >= list.length) {
+        console.error(
+          `Failed to load component for ${selector}. Tried: ${list.join(", ")}`,
+        );
+        return;
+      }
+
+      const url = list[index];
+      fetch(url)
+        .then((response) => {
+          if (!response.ok) throw new Error(`Failed to load ${url}`);
+          return response.text();
+        })
+        .then((html) => {
+          el.outerHTML = html;
+          if (callback) callback();
+        })
+        .catch(() => tryLoad(index + 1));
+    }
+
+    tryLoad(0);
   }
 
   function ensureFontAwesome() {
@@ -575,19 +604,23 @@
 
   // Orchestrate component loading and layout initialization
   function init() {
-    const isRoot = !window.location.pathname.includes("/html/");
-    const pathPrefix = isRoot ? "" : "../";
+    const isRoot = isRootPage();
 
     ensureFontAwesome();
 
     // Init scroll reveal for elements already in DOM
     initScrollReveal();
 
+    const navbarUrls = isRoot
+      ? ["html/navbar.html"]
+      : ["navbar.html", "../html/navbar.html"];
+
+    const footerUrls = isRoot
+      ? ["html/footer.html"]
+      : ["footer.html", "../html/footer.html"];
+
     // Load Navbar
-    loadComponent(
-      "#navbar-placeholder",
-      pathPrefix + "html/navbar.html",
-      () => {
+    loadComponent("#navbar-placeholder", navbarUrls, () => {
         // Adjust links depending on subfolder vs root
         if (!isRoot) {
           const logoLink = document.querySelector(".navbar__logo");
@@ -637,10 +670,7 @@
     );
 
     // Load Footer
-    loadComponent(
-      "#footer-placeholder",
-      pathPrefix + "html/footer.html",
-      () => {
+    loadComponent("#footer-placeholder", footerUrls, () => {
         initFooterHandlers();
         // Also run scroll reveal again after footer is injected into DOM
         initScrollReveal();

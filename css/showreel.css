@@ -421,6 +421,14 @@
 
 /* Responsive: Mobile (≤768px) — desktop unchanged */
 @media (max-width: 768px) {
+  /* Showreel only: full-bleed zoomed background on mobile */
+  body.page-showreel,
+  body.page-showreel.light-theme {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
   .showreel-page {
     padding: 8px;
     padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));

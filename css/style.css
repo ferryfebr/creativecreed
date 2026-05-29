@@ -88,6 +88,17 @@ body.light-theme {
   }
 }
 
+/* Showreel & Our Clients: original mobile background assets */
+body.page-showreel,
+body.page-clients {
+  --bg-image: url("../bg/bgblack.jpg");
+}
+
+body.page-showreel.light-theme,
+body.page-clients.light-theme {
+  --bg-image: url("../bg/bgwhite.jpg");
+}
+
 /* --- Reset --- */
 *,
 *::before,
@@ -174,9 +185,25 @@ body {
     background-repeat: no-repeat;
   }
 
-  /* Light theme background asset needs extra help on mobile */
+  /* Fix reversed dark/light mapping for baru backgrounds on mobile */
+  :root {
+    --bg-image: url("../bg/bgwhitebaru.png");
+  }
+
   body.light-theme {
     background-size: contain;
+    --bg-image: url("../bg/bgblackbaru.png");
+  }
+
+  /* Showreel & Our Clients keep original jpg backgrounds */
+  body.page-showreel,
+  body.page-clients {
+    --bg-image: url("../bg/bgblack.jpg");
+  }
+
+  body.page-showreel.light-theme,
+  body.page-clients.light-theme {
+    --bg-image: url("../bg/bgwhite.jpg");
   }
 }
 
