@@ -7,7 +7,7 @@
 :root {
   --bg-nav: #141414;
   --bg-page: #0e0e0e;
-  --bg-image: url("../bg/bgblack.jpg");
+  --bg-image: url("../bg/bgblackbaru.png");
   --logo-image: url("../bg/logodark.png");
   --text-primary: #ffffff;
   --text-muted: #aaaaaa;
@@ -60,7 +60,7 @@ html {
 body.light-theme {
   --bg-nav: #f0f0f0;
   --bg-page: #e8e8e8;
-  --bg-image: url("../bg/bgwhite.jpg");
+  --bg-image: url("../bg/bgwhitebaru.png");
   --logo-image: url("../bg/logolight.png");
   --text-primary: #111111;
   --text-muted: #555555;
