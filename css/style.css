@@ -78,6 +78,16 @@ body.light-theme {
   --logo-text-color: #111111;
 }
 
+/* --- Responsive Background Images for Desktop --- */
+@media (min-width: 768px) {
+  :root {
+    --bg-image: url("../bg/bgblackdesk.jpg");
+  }
+  body.light-theme {
+    --bg-image: url("../bg/bgwhitedesk.jpg");
+  }
+}
+
 /* --- Reset --- */
 *,
 *::before,
@@ -1392,12 +1402,21 @@ body.light-theme .creative-solutions {
   }
 
   .creative-solutions__title {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
+    text-align: center;
+    padding-left: 0;
   }
 
-  .our-projects__title,
+  .our-projects__title {
+    padding-left: 0;
+    font-size: 0.8rem;
+    text-align: left;
+  }
+
   .our-projects__desc {
     padding-left: 0;
+    font-size: 0.25rem;
+    text-align: left;
   }
 
   .projects-grid {
