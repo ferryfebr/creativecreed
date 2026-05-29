@@ -392,6 +392,33 @@
   cursor: pointer;
 }
 
+/* Desktop (≥769px): scale player with viewport so it stays large on wide monitors */
+@media (min-width: 769px) {
+  .showreel-page {
+    max-width: none;
+    width: 100%;
+    padding: 16px 24px 32px;
+    min-height: calc(100dvh - 72px);
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .showreel-slider-wrapper {
+    max-width: none;
+    width: 100%;
+    gap: clamp(12px, 1.5vw, 24px);
+  }
+
+  .showreel-container {
+    width: min(
+      calc(100vw - 180px),
+      calc((100dvh - 72px - 48px) * 16 / 9)
+    );
+    max-width: none;
+    flex: 0 1 auto;
+  }
+}
+
 /* Responsive: Mobile (≤768px) — desktop unchanged */
 @media (max-width: 768px) {
   .showreel-page {
