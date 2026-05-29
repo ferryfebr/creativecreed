@@ -88,15 +88,15 @@ body.light-theme {
   }
 }
 
-/* Showreel & Our Clients: original mobile background assets */
+/* Showreel & Our Clients: desktop backgrounds */
 body.page-showreel,
 body.page-clients {
-  --bg-image: url("../bg/bgblack.jpg");
+  --bg-image: url("../bg/bgblackdesk.jpg");
 }
 
 body.page-showreel.light-theme,
 body.page-clients.light-theme {
-  --bg-image: url("../bg/bgwhite.jpg");
+  --bg-image: url("../bg/bgwhitedesk.jpg");
 }
 
 /* --- Reset --- */

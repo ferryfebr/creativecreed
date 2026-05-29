@@ -421,11 +421,11 @@
 
 /* Responsive: Mobile (≤768px) — desktop unchanged */
 @media (max-width: 768px) {
-  /* Showreel only: full-bleed zoomed background on mobile */
+  /* Match the standard mobile background behavior used by other pages */
   body.page-showreel,
   body.page-showreel.light-theme {
-    background-size: cover;
-    background-position: center;
+    background-size: 100% auto;
+    background-position: top center;
     background-repeat: no-repeat;
   }
 
