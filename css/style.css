@@ -1018,7 +1018,8 @@ a {
    COLUMN: CONTACT
    ============================================ */
 .footer-col--contact {
-  padding-left: 10rem;
+  padding-left: 9rem;
+  text-align: right;
 }
 
 /* ============================================
@@ -1045,6 +1046,7 @@ a {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1.2rem;
+  white-space: nowrap;
   background-color: #000000;
   color: #ffffff;
   background-image:
