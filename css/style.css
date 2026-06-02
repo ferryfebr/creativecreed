@@ -952,7 +952,7 @@ a {
    ============================================ */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1.4fr 1.2fr;
+  grid-template-columns: 1.6fr 1.4fr 1.58fr;
   gap: calc(var(--spacing-xl) * var(--footer-scale));
   align-items: start;
 }
@@ -1025,7 +1025,7 @@ a {
    COLUMN: LOCATION
    ============================================ */
 .footer-col--location {
-  padding-left: 4rem;
+  padding-left: 2rem;
 }
 
 .footer-hiring {
