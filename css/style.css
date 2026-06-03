@@ -83,6 +83,7 @@ body.light-theme {
   :root {
     --bg-image: url("../bg/bgblackdesk.jpg");
   }
+
   body.light-theme {
     --bg-image: url("../bg/bgwhitedesk.jpg");
   }
@@ -118,6 +119,7 @@ body.page-clients.light-theme {
     opacity: 0;
     transform: translateY(24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -133,12 +135,15 @@ body.page-clients.light-theme {
 .fade-in-on-load:nth-child(1) {
   animation-delay: 0.05s;
 }
+
 .fade-in-on-load:nth-child(2) {
   animation-delay: 0.15s;
 }
+
 .fade-in-on-load:nth-child(3) {
   animation-delay: 0.25s;
 }
+
 .fade-in-on-load:nth-child(4) {
   animation-delay: 0.35s;
 }
@@ -389,6 +394,7 @@ body.light-theme .nav-btn:hover {
 }
 
 @keyframes pulse-dot {
+
   0%,
   100% {
     box-shadow: 0 0 4px rgba(224, 32, 32, 0.5);
@@ -739,8 +745,7 @@ body.light-theme .theme-icon--moon {
     background: var(--bg-nav);
     flex-direction: column;
     align-items: stretch;
-    padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0
-      max(20px, env(safe-area-inset-left, 0px));
+    padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
     margin: 0;
     gap: 10px;
     z-index: 99;
@@ -779,7 +784,8 @@ body.light-theme .theme-icon--moon {
 
   .nav-item {
     width: 100%;
-    display: block; /* changed from flex to avoid flex bugs on old browsers */
+    display: block;
+    /* changed from flex to avoid flex bugs on old browsers */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -787,14 +793,16 @@ body.light-theme .theme-icon--moon {
 
   .navbar__menu .nav-btn {
     width: 100%;
-    display: flex; /* override inline-flex from desktop */
+    display: flex;
+    /* override inline-flex from desktop */
     justify-content: center;
     padding: clamp(10px, 3vw, 14px) 16px;
     font-size: clamp(14px, 4vw, 16px);
     border-radius: 12px;
     margin: 0;
     box-sizing: border-box;
-    transform: none !important; /* Force remove any hover/active transforms that might stick */
+    transform: none !important;
+    /* Force remove any hover/active transforms that might stick */
     text-align: center;
   }
 
@@ -943,8 +951,7 @@ a {
 .footer-main {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: calc(var(--spacing-xl) * var(--footer-scale))
-    calc(var(--spacing-lg) * var(--footer-scale));
+  padding: calc(var(--spacing-xl) * var(--footer-scale)) calc(var(--spacing-lg) * var(--footer-scale));
 }
 
 /* ============================================
@@ -952,7 +959,9 @@ a {
    ============================================ */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1.4fr 1.58fr;
+  /* Kolom ke-3 (Location) diperlebar agar teks tidak lebih panjang dari kolom Contact.
+     Naikkan nilai 2fr jika masih ada teks yang terlalu panjang. */
+  grid-template-columns: 1.6fr 1.4fr 2fr;
   gap: calc(var(--spacing-xl) * var(--footer-scale));
   align-items: start;
 }
@@ -1018,7 +1027,7 @@ a {
    COLUMN: CONTACT
    ============================================ */
 .footer-col--contact {
-  padding-left: 9rem;
+  padding-left: 7.2rem;
   text-align: right;
 }
 
@@ -1026,7 +1035,9 @@ a {
    COLUMN: LOCATION
    ============================================ */
 .footer-col--location {
-  padding-left: 2rem;
+  /* Kurangi padding-left agar kolom Location lebih rapat ke kolom Contact.
+     Ubah 0.5rem jika ingin lebih dekat atau lebih jauh. */
+  padding-left: 1.5rem;
 }
 
 .footer-hiring {
@@ -1051,13 +1062,11 @@ a {
   color: #ffffff;
   background-image:
     linear-gradient(#000000, #000000),
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgb(255, 52, 52) 0%,
       #ffffff 45%,
       #ffffff 55%,
-      rgb(255, 52, 52) 100%
-    );
+      rgb(255, 52, 52) 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   border: 2px solid transparent;
@@ -1079,13 +1088,11 @@ body.light-theme .youtube-btn {
   color: #1a1a1a;
   background-image:
     linear-gradient(#d5d5d5),
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgb(255, 52, 52) 0%,
       #ffffff 45%,
       #ffffff 55%,
-      rgb(255, 52, 52) 100%
-    );
+      rgb(255, 52, 52) 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   border: 2px solid transparent;
@@ -1130,7 +1137,8 @@ body.light-theme .youtube-btn:hover {
 .footer-contacts {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-md) * var(--footer-scale));
+  gap: 1.1rem;
+  /* Ubah nilai ini untuk mengatur jarak antar contact person */
   padding-left: 2rem;
 }
 
@@ -1199,8 +1207,7 @@ body.light-theme .youtube-btn:hover {
    ============================================ */
 .footer-bottom {
   background: var(--color-bottom-bg);
-  padding: calc(var(--spacing-sm) * var(--footer-scale))
-    calc(var(--spacing-lg) * var(--footer-scale));
+  padding: calc(var(--spacing-sm) * var(--footer-scale)) calc(var(--spacing-lg) * var(--footer-scale));
   text-align: center;
 }
 
@@ -1259,12 +1266,11 @@ body.light-theme .youtube-btn:hover {
    ============================================ */
 @media (max-width: 600px) {
   .footer-main {
-    padding: calc(var(--spacing-lg) * var(--footer-scale))
-      calc(var(--spacing-md) * var(--footer-scale));
+    padding: calc(var(--spacing-lg) * var(--footer-scale)) calc(var(--spacing-md) * var(--footer-scale));
   }
 
   .footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
     gap: calc(var(--spacing-lg) * var(--footer-scale));
   }
 
@@ -1283,6 +1289,11 @@ body.light-theme .youtube-btn:hover {
     padding-top: calc(var(--spacing-md) * var(--footer-scale));
     border-top: 1px solid var(--color-border);
     padding-left: 0;
+  }
+
+  /* Mobile: Contact alignment kiri (desktop tetap kanan via text-align:right di atas) */
+  .footer-col--contact {
+    text-align: left;
   }
 
   .footer-contacts {
@@ -1321,10 +1332,8 @@ body.light-theme .youtube-btn:hover {
 .creative-solutions {
   padding: 80px 20px;
   background-color: transparent;
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.08) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -1414,19 +1423,15 @@ body.light-theme .creative-solutions {
 }
 
 .expand-gallery .expand-item:hover .expand-item__overlay {
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.1) 50%
-  );
+  background: linear-gradient(0deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.1) 50%);
 }
 
 .expand-gallery:not(:hover) .expand-item.active .expand-item__overlay {
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.1) 50%
-  );
+  background: linear-gradient(0deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.1) 50%);
 }
 
 .expand-item__content {
@@ -1957,13 +1962,11 @@ body.light-theme .project-modal__content {
   padding: 40px 16px;
   background-image:
     linear-gradient(135deg, #7b1d22 0%, #4a1012 100%),
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgb(255, 52, 52) 0%,
       #ffffff 45%,
       #ffffff 55%,
-      rgb(255, 52, 52) 100%
-    );
+      rgb(255, 52, 52) 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   border: 7.5px solid transparent;
@@ -2009,13 +2012,11 @@ body.light-theme .project-modal__content {
 
 .text-gradient-pink {
   font-family: inherit;
-  background: linear-gradient(
-    90deg,
-    #ff6b81 0%,
-    #ffffff 45%,
-    #ffffff 55%,
-    #ff6b81 100%
-  );
+  background: linear-gradient(90deg,
+      #ff6b81 0%,
+      #ffffff 45%,
+      #ffffff 55%,
+      #ff6b81 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -2091,6 +2092,7 @@ body.light-theme .project-modal__content {
 }
 
 @keyframes bounceDown {
+
   0%,
   20%,
   50%,

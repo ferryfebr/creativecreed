@@ -1,35 +1,204 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const logos = document.querySelectorAll(".client-logo-wrapper");
-  logos.forEach((logo, index) => {
-    // Menghitung baris ke berapa logo ini berada (mulai dari 0)
-    // Baris 1-3 masing-masing 6 logo (index 0-17)
-    // Baris 4 berisi 7 logo sisanya (index 18-24)
-    let rowIndex;
-    if (index < 18) {
-      rowIndex = Math.floor(index / 6);
-    } else {
-      rowIndex = 3;
-    }
+/* =========================================================
+   CLIENT PAGE — client.js
+   =========================================================
+   Fungsi utama:
+   1. GLOBAL STEP TIMER  — satu timer bersama menggerakkan
+      semua baris serentak, tanpa stagger.
+   2. HOVER PER BARIS    — hover pada satu baris menghentikan
+      HANYA baris itu; baris lain tetap berjalan.
+   3. CENTER UPSCALE     — setelah tiap step selesai, 2 logo
+      terdekat dari pusat board ditandai "is-center" secara
+      EKSPLISIT (bukan deteksi rAF berkelanjutan), sehingga
+      selalu tepat 2 logo yang membesar.
+   ========================================================= */
 
-    // Memberikan delay berdasarkan baris
-    logo.style.transitionDelay = `${rowIndex * 0.7}s`;
-  });
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ══════════════════════════════════════════════════════════
+     DETEKSI PERANGKAT
+     ══════════════════════════════════════════════════════════ */
+
+  /*
+   * isMobile: true jika lebar layar ≤ 600px (HP pada umumnya).
+   * Semua konstanta di bawah otomatis menyesuaikan berdasarkan ini.
+   * Desktop (> 600px) tidak berubah sama sekali.
+   */
+  const isMobile = window.innerWidth <= 600;
+
+  /* ══════════════════════════════════════════════════════════
+     KONFIGURASI DESKTOP (> 600px) — FINAL, JANGAN DIUBAH
+     ══════════════════════════════════════════════════════════ */
+
+  /*
+   * LOGO_WIDTH  : harus cocok dengan `width` di CSS .marquee-item.
+   * LOGO_GAP    : harus cocok dengan `gap` di CSS .marquee-track.
+   * STEP_LOGOS  : berapa logo digeser per langkah.
+   * CENTER_COUNT: berapa logo yang di-upscale di tengah.
+   */
+  const LOGO_WIDTH   = isMobile ? 65  : 100;   /* px — CSS mobile: 65px | desktop: 100px */
+  const LOGO_GAP     = isMobile ? 8   : 12;    /* px — CSS mobile: 8px  | desktop: 12px  */
+  const STEP_LOGOS   = isMobile ? 1   : 2;     /* HP: geser 1 logo; Desktop: geser 2 logo */
+  const CENTER_COUNT = isMobile ? 1   : 2;     /* HP: 1 logo membesar; Desktop: 2 logo   */
+
+  /*
+   * SLIDE_DURATION : durasi animasi geser (milidetik).
+   *   Lebih BESAR → geser lebih lambat dan halus.
+   *   Lebih KECIL → geser lebih cepat dan singkat.
+   *   Default: 520ms
+   */
+  const SLIDE_DURATION = 520;
+
+  /*
+   * PAUSE_DURATION : jeda diam antar langkah (milidetik).
+   *   Ini adalah waktu logo "berhenti" di kotak tengah sebelum
+   *   lanjut ke logo berikutnya.
+   *   Lebih BESAR → logo terlihat lebih lama di tengah.
+   *   Lebih KECIL → geser terasa lebih cepat.
+   *   Default: 1800ms
+   */
+  const PAUSE_DURATION = 1800;
+
+  /* ── DERIVED (tidak perlu diubah manual) ── */
+  const STEP_PX = STEP_LOGOS * (LOGO_WIDTH + LOGO_GAP);
+
+  /* ══════════════════════════════════════════════════════════
+     INISIALISASI STATE TIAP BARIS
+     ══════════════════════════════════════════════════════════ */
 
   const board = document.querySelector(".clients-board");
-  if (board) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Menambahkan class 'animate' untuk memicu efek Fade In
-            board.classList.add("animate");
-            observer.unobserve(board); // Hanya dijalankan sekali
-          }
-        });
-      },
-      { threshold: 0.1 }, // Berjalan ketika 10% elemen .clients-board terlihat di layar
-    );
+  const rows  = document.querySelectorAll(".marquee-row");
+  const rowStates = [];
 
-    observer.observe(board);
+  rows.forEach((row) => {
+    const track = row.querySelector(".marquee-track");
+    if (!track) return;
+
+    const originals = track.querySelectorAll(".marquee-item:not([aria-hidden='true'])");
+    const logoCount  = originals.length;
+    const halfWidth  = logoCount * (LOGO_WIDTH + LOGO_GAP);
+
+    const state = {
+      track,
+      currentOffset: halfWidth,
+      halfWidth,
+      isHovered: false,
+    };
+    rowStates.push(state);
+
+    /* Posisi awal — tampilkan set duplikat (untuk arah scroll ke kanan) */
+    track.style.transition = "none";
+    track.style.transform  = `translateX(-${halfWidth}px)`;
+
+    /* ── HOVER PER BARIS ── */
+    row.addEventListener("mouseenter", () => {
+      state.isHovered = true;
+      row.classList.add("is-hovered");
+    });
+    row.addEventListener("mouseleave", () => {
+      state.isHovered = false;
+      row.classList.remove("is-hovered");
+    });
+  });
+
+  /* ══════════════════════════════════════════════════════════
+     UPSCALE HELPER — eksplisit, bukan rAF berkelanjutan
+     ══════════════════════════════════════════════════════════ */
+
+  /**
+   * Hapus semua class "is-center" dari seluruh baris.
+   * Dipanggil SEBELUM slide dimulai.
+   */
+  function clearCenterLogos() {
+    rows.forEach((row) => {
+      row.querySelectorAll(".marquee-item.is-center").forEach((item) => {
+        item.classList.remove("is-center");
+      });
+    });
   }
+
+  /**
+   * Setelah slide selesai: untuk setiap baris, cari CENTER_COUNT logo
+   * yang pusat horizontalnya paling dekat dengan pusat board,
+   * lalu tambahkan class "is-center" ke logo-logo tersebut.
+   *
+   * Pendekatan ini DETERMINISTIK — tidak bergantung pada zona piksel
+   * yang harus "pas", sehingga selalu tepat 2 logo yang membesar.
+   */
+  function markCenterLogos() {
+    if (!board) return;
+
+    const boardRect    = board.getBoundingClientRect();
+    const boardCenterX = boardRect.left + boardRect.width / 2;
+
+    rows.forEach((row) => {
+      /* Ambil semua item yang masih dalam area board (visible) */
+      const items = Array.from(row.querySelectorAll(".marquee-item")).filter((item) => {
+        const r = item.getBoundingClientRect();
+        /* Item dianggap visible jika area-nya bersinggungan dengan board */
+        return r.right > boardRect.left && r.left < boardRect.right;
+      });
+
+      /* Urutkan berdasarkan jarak pusat item dari pusat board (terdekat duluan) */
+      items.sort((a, b) => {
+        const ra   = a.getBoundingClientRect();
+        const rb   = b.getBoundingClientRect();
+        const distA = Math.abs((ra.left + ra.width / 2) - boardCenterX);
+        const distB = Math.abs((rb.left + rb.width / 2) - boardCenterX);
+        return distA - distB;
+      });
+
+      /* Tandai CENTER_COUNT logo terdekat */
+      items.slice(0, CENTER_COUNT).forEach((item) => {
+        item.classList.add("is-center");
+      });
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     TIMER GLOBAL — semua baris bergerak BERSAMAAN
+     ══════════════════════════════════════════════════════════ */
+
+  function doGlobalStep() {
+
+    /* Hapus upscale sebelum mulai bergerak */
+    clearCenterLogos();
+
+    /* FASE 1 — Geser semua baris yang tidak di-hover */
+    rowStates.forEach((state) => {
+      if (state.isHovered) return;
+
+      state.currentOffset -= STEP_PX;
+
+      state.track.style.transition = `transform ${SLIDE_DURATION}ms ease-in-out`;
+      state.track.style.transform  = `translateX(-${state.currentOffset}px)`;
+    });
+
+    /* FASE 2 — Setelah slide selesai */
+    setTimeout(() => {
+
+      /* Reset seamless untuk baris yang sudah di titik 0 */
+      rowStates.forEach((state) => {
+        if (state.currentOffset <= 0) {
+          state.currentOffset = state.halfWidth;
+          state.track.style.transition = "none";
+          state.track.style.transform  = `translateX(-${state.currentOffset}px)`;
+          void state.track.offsetHeight; /* force reflow */
+        }
+      });
+
+      /* Logo sudah berhenti — tandai 2 logo tengah di tiap baris */
+      markCenterLogos();
+
+      /* Jadwalkan step berikutnya */
+      setTimeout(doGlobalStep, PAUSE_DURATION);
+
+    }, SLIDE_DURATION);
+  }
+
+  /* Tandai center logos di posisi awal, lalu mulai timer */
+  setTimeout(() => {
+    markCenterLogos();
+    setTimeout(doGlobalStep, PAUSE_DURATION);
+  }, 100); /* Tunggu sebentar agar layout selesai dihitung */
+
 });
