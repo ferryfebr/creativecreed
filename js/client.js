@@ -25,35 +25,36 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   const isMobile = window.innerWidth <= 600;
 
-  /* ══════════════════════════════════════════════════════════
-     KONFIGURASI DESKTOP (> 600px) — FINAL, JANGAN DIUBAH
-     ══════════════════════════════════════════════════════════ */
+  /* ════════════════════════════════════════════════════════
+     UKURAN LOGO — dibaca dari DOM setelah CSS dirender
+     Cara ini membuat JS otomatis mengikuti nilai CSS di semua
+     breakpoint (termasuk layar besar ≥14 inch) tanpa perlu
+     update kode JS setiap kali CSS diubah.
+     ════════════════════════════════════════════════════════ */
 
-  /*
-   * LOGO_WIDTH  : harus cocok dengan `width` di CSS .marquee-item.
-   * LOGO_GAP    : harus cocok dengan `gap` di CSS .marquee-track.
-   * STEP_LOGOS  : berapa logo digeser per langkah.
-   * CENTER_COUNT: berapa logo yang di-upscale di tengah.
-   */
-  const LOGO_WIDTH   = isMobile ? 65  : 100;   /* px — CSS mobile: 65px | desktop: 100px */
-  const LOGO_GAP     = isMobile ? 8   : 12;    /* px — CSS mobile: 8px  | desktop: 12px  */
-  const STEP_LOGOS   = isMobile ? 1   : 2;     /* HP: geser 1 logo; Desktop: geser 2 logo */
-  const CENTER_COUNT = isMobile ? 1   : 2;     /* HP: 1 logo membesar; Desktop: 2 logo   */
+  /* Baca ukuran aktual dari elemen pertama di DOM */
+  const _sampleItem  = document.querySelector(".marquee-item");
+  const _sampleTrack = document.querySelector(".marquee-track");
+
+  const LOGO_WIDTH = _sampleItem
+    ? Math.round(_sampleItem.getBoundingClientRect().width)
+    : (isMobile ? 65 : 100);
+
+  const LOGO_GAP = _sampleTrack
+    ? (parseFloat(window.getComputedStyle(_sampleTrack).gap) || (isMobile ? 8 : 12))
+    : (isMobile ? 8 : 12);
+
+  const STEP_LOGOS  = isMobile ? 1 : 2;
+  const CENTER_COUNT = isMobile ? 1 : 2;
 
   /*
    * SLIDE_DURATION : durasi animasi geser (milidetik).
-   *   Lebih BESAR → geser lebih lambat dan halus.
-   *   Lebih KECIL → geser lebih cepat dan singkat.
    *   Default: 520ms
    */
   const SLIDE_DURATION = 520;
 
   /*
    * PAUSE_DURATION : jeda diam antar langkah (milidetik).
-   *   Ini adalah waktu logo "berhenti" di kotak tengah sebelum
-   *   lanjut ke logo berikutnya.
-   *   Lebih BESAR → logo terlihat lebih lama di tengah.
-   *   Lebih KECIL → geser terasa lebih cepat.
    *   Default: 1800ms
    */
   const PAUSE_DURATION = 1800;
@@ -66,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
      ══════════════════════════════════════════════════════════ */
 
   const board = document.querySelector(".clients-board");
-  const rows  = document.querySelectorAll(".marquee-row");
+  const rows = document.querySelectorAll(".marquee-row");
   const rowStates = [];
 
   rows.forEach((row) => {
@@ -74,8 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!track) return;
 
     const originals = track.querySelectorAll(".marquee-item:not([aria-hidden='true'])");
-    const logoCount  = originals.length;
-    const halfWidth  = logoCount * (LOGO_WIDTH + LOGO_GAP);
+    const logoCount = originals.length;
+    const halfWidth = logoCount * (LOGO_WIDTH + LOGO_GAP);
 
     const state = {
       track,
@@ -87,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* Posisi awal — tampilkan set duplikat (untuk arah scroll ke kanan) */
     track.style.transition = "none";
-    track.style.transform  = `translateX(-${halfWidth}px)`;
+    track.style.transform = `translateX(-${halfWidth}px)`;
 
     /* ── HOVER PER BARIS ── */
     row.addEventListener("mouseenter", () => {
@@ -127,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function markCenterLogos() {
     if (!board) return;
 
-    const boardRect    = board.getBoundingClientRect();
+    const boardRect = board.getBoundingClientRect();
     const boardCenterX = boardRect.left + boardRect.width / 2;
 
     rows.forEach((row) => {
@@ -140,8 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       /* Urutkan berdasarkan jarak pusat item dari pusat board (terdekat duluan) */
       items.sort((a, b) => {
-        const ra   = a.getBoundingClientRect();
-        const rb   = b.getBoundingClientRect();
+        const ra = a.getBoundingClientRect();
+        const rb = b.getBoundingClientRect();
         const distA = Math.abs((ra.left + ra.width / 2) - boardCenterX);
         const distB = Math.abs((rb.left + rb.width / 2) - boardCenterX);
         return distA - distB;
@@ -170,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
       state.currentOffset -= STEP_PX;
 
       state.track.style.transition = `transform ${SLIDE_DURATION}ms ease-in-out`;
-      state.track.style.transform  = `translateX(-${state.currentOffset}px)`;
+      state.track.style.transform = `translateX(-${state.currentOffset}px)`;
     });
 
     /* FASE 2 — Setelah slide selesai */
@@ -181,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (state.currentOffset <= 0) {
           state.currentOffset = state.halfWidth;
           state.track.style.transition = "none";
-          state.track.style.transform  = `translateX(-${state.currentOffset}px)`;
+          state.track.style.transform = `translateX(-${state.currentOffset}px)`;
           void state.track.offsetHeight; /* force reflow */
         }
       });

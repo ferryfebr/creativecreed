@@ -40,7 +40,8 @@
 .clients-board {
   /* Background diambil 100% dari PNG — tidak ada warna CSS di sini */
   background-image: url("../client-img/bgclients.png");
-  background-size: 100% 100%;   /* Stretch PNG tepat mengisi elemen */
+  background-size: 100% 100%;
+  /* Stretch PNG tepat mengisi elemen */
   background-repeat: no-repeat;
 
   /*
@@ -49,9 +50,11 @@
    * Default: 55px
    */
   border-radius: 55px;
-  overflow: hidden;              /* Wajib: clip logo yang keluar batas */
+  overflow: hidden;
+  /* Wajib: clip logo yang keluar batas */
 
-  padding: 48px 0;              /* Padding atas-bawah; kiri-kanan 0 agar row full width */
+  padding: 48px 0;
+  /* Padding atas-bawah; kiri-kanan 0 agar row full width */
   width: 90%;
   max-width: 1300px;
   display: flex;
@@ -62,6 +65,66 @@
    * Ubah nilai ini untuk memberi lebih/kurang ruang antar baris.
    */
   gap: 20px;
+}
+
+/* ─── LARGE DESKTOP (≥1440px) ────────────────────────────── */
+/* Layar 15–17 inch atau monitor yang lebih besar               */
+@media (min-width: 1440px) {
+  .clients-board {
+    max-width: 1650px;
+    gap: 26px;
+    padding: 56px 0;
+  }
+
+  .marquee-item {
+    width: 180px;
+    height: 117px;
+  }
+
+  .marquee-track {
+    gap: 21px;
+  }
+}
+
+/* ─── EXTRA LARGE (≥1920px) ─────────────────────────────── */
+/* Monitor 20 inch ke atas — board dan logo membesar penuh    */
+@media (min-width: 1920px) {
+  .clients-board {
+    max-width: 2100px;
+    width: 93%;
+    gap: 32px;
+    padding: 68px 0;
+    border-radius: 68px;
+  }
+
+  .marquee-item {
+    width: 228px;
+    height: 148px;
+  }
+
+  .marquee-track {
+    gap: 23px;
+  }
+}
+
+/* ─── ULTRA WIDE (≥2400px) ──────────────────────────────── */
+@media (min-width: 2400px) {
+  .clients-board {
+    max-width: 2550px;
+    width: 90%;
+    gap: 40px;
+    padding: 80px 0;
+    border-radius: 80px;
+  }
+
+  .marquee-item {
+    width: 273px;
+    height: 177px;
+  }
+
+  .marquee-track {
+    gap: 29px;
+  }
 }
 
 /* ─── SATU BARIS MARQUEE ─────────────────────────────────── */
@@ -75,20 +138,16 @@
    * Ubah persentase (15% dan 85%) untuk memperlebar/mempersempit
    * area fade. Nilai lebih kecil = fade mulai lebih dekat ke tepi.
    */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 15%,
-    black 85%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 15%,
-    black 85%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
+      transparent 100%);
+  mask-image: linear-gradient(to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
+      transparent 100%);
 }
 
 /* ─── TRACK (rel animasi) ────────────────────────────────── */
@@ -98,9 +157,8 @@
 
   /*
    * Gap antar logo dalam satu baris.
-   * PENTING: nilai ini harus sama dengan LOGO_GAP di client.js
-   * agar perhitungan langkah animasi tepat.
-   * Default: 12px
+   * Nilai ini dibaca otomatis oleh client.js dari DOM —
+   * tidak perlu sinkronisasi manual. Default: 12px
    */
   gap: 12px;
 
@@ -163,9 +221,9 @@
   z-index: 2;
 }
 
-/* ─── RESPONSIVE ──────────────────────────────────────────── */
+/* ─── RESPONSIVE KECIL ─────────────────────────────────────── */
 
-/* Tablet (900px ke bawah) — desktop tetap tak berubah */
+/* Tablet (900px ke bawah) */
 @media (max-width: 900px) {
   .clients-board {
     border-radius: 32px;
@@ -198,20 +256,16 @@
 
   .marquee-row {
     /* Perlebar fade mask agar terlihat lebih rapi di layar sempit */
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 12%,
-      black 88%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 12%,
-      black 88%,
-      transparent 100%
-    );
+    -webkit-mask-image: linear-gradient(to right,
+        transparent 0%,
+        black 12%,
+        black 88%,
+        transparent 100%);
+    mask-image: linear-gradient(to right,
+        transparent 0%,
+        black 12%,
+        black 88%,
+        transparent 100%);
   }
 
   .marquee-track {
@@ -239,4 +293,9 @@
     width: 58px;
     height: 40px;
   }
+}
+
+.marquee-item.is-center {
+  transform: scale(1.2);
+}
 }
