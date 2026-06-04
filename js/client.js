@@ -19,48 +19,52 @@ document.addEventListener("DOMContentLoaded", () => {
      ══════════════════════════════════════════════════════════ */
 
   /*
-   * isMobile: true jika lebar layar ≤ 600px (HP pada umumnya).
+   * isMobile: true jika lebar layar <= 768px (Mobile & Tablet).
    * Semua konstanta di bawah otomatis menyesuaikan berdasarkan ini.
-   * Desktop (> 600px) tidak berubah sama sekali.
+   * Desktop (> 768px) tidak berubah sama sekali.
    */
-  const isMobile = window.innerWidth <= 600;
+  const isMobile = window.innerWidth <= 768;
 
-  /* ════════════════════════════════════════════════════════
-     UKURAN LOGO — dibaca dari DOM setelah CSS dirender
-     Cara ini membuat JS otomatis mengikuti nilai CSS di semua
-     breakpoint (termasuk layar besar ≥14 inch) tanpa perlu
-     update kode JS setiap kali CSS diubah.
-     ════════════════════════════════════════════════════════ */
+  /* ══════════════════════════════════════════════════════════
+     KONFIGURASI DESKTOP (> 600px) — FINAL, JANGAN DIUBAH
+     ══════════════════════════════════════════════════════════ */
 
-  /* Baca ukuran aktual dari elemen pertama di DOM */
-  const _sampleItem  = document.querySelector(".marquee-item");
-  const _sampleTrack = document.querySelector(".marquee-track");
-
-  const LOGO_WIDTH = _sampleItem
-    ? Math.round(_sampleItem.getBoundingClientRect().width)
-    : (isMobile ? 65 : 100);
-
-  const LOGO_GAP = _sampleTrack
-    ? (parseFloat(window.getComputedStyle(_sampleTrack).gap) || (isMobile ? 8 : 12))
-    : (isMobile ? 8 : 12);
-
-  const STEP_LOGOS  = isMobile ? 1 : 2;
-  const CENTER_COUNT = isMobile ? 1 : 2;
+  /*
+   * LOGO_WIDTH  : harus cocok dengan `width` di CSS .marquee-item.
+   * LOGO_GAP    : harus cocok dengan `gap` di CSS .marquee-track.
+   * STEP_LOGOS  : berapa logo digeser per langkah.
+   * CENTER_COUNT: berapa logo yang di-upscale di tengah.
+   */
+  const STEP_LOGOS = isMobile ? 1 : 2;     /* HP: geser 1 logo; Desktop: geser 2 logo */
+  const CENTER_COUNT = isMobile ? 1 : 2;     /* HP: 1 logo membesar; Desktop: 2 logo   */
 
   /*
    * SLIDE_DURATION : durasi animasi geser (milidetik).
-   *   Default: 520ms
    */
   const SLIDE_DURATION = 520;
 
   /*
    * PAUSE_DURATION : jeda diam antar langkah (milidetik).
-   *   Default: 1800ms
    */
   const PAUSE_DURATION = 1800;
 
-  /* ── DERIVED (tidak perlu diubah manual) ── */
-  const STEP_PX = STEP_LOGOS * (LOGO_WIDTH + LOGO_GAP);
+  /* ── FUNGSI DINAMIS ── 
+   * Agar CSS yang menggunakan vw (viewport width) tetap sinkron dengan JS.
+   */
+  function getTrackMetrics(track) {
+    const item = track.querySelector(".marquee-item");
+    const style = window.getComputedStyle(track);
+    
+    // Fallback default jika elemen belum sepenuhnya ter-render
+    const defaultW = isMobile ? 65 : 100;
+    const defaultG = isMobile ? 8 : 12;
+    
+    const w = item ? parseFloat(item.getBoundingClientRect().width) || defaultW : defaultW;
+    let g = parseFloat(style.gap);
+    if (isNaN(g)) g = defaultG;
+
+    return { w, g };
+  }
 
   /* ══════════════════════════════════════════════════════════
      INISIALISASI STATE TIAP BARIS
@@ -76,19 +80,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const originals = track.querySelectorAll(".marquee-item:not([aria-hidden='true'])");
     const logoCount = originals.length;
-    const halfWidth = logoCount * (LOGO_WIDTH + LOGO_GAP);
+    
+    // Gunakan fungsi dinamis agar sinkron dengan vw
+    const metrics = getTrackMetrics(track);
+    const halfWidth = logoCount * (metrics.w + metrics.g);
+
+    /* Clone satu set lagi agar total ada 3 set (mencegah kekosongan di tepi layar) */
+    originals.forEach(item => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      track.appendChild(clone);
+    });
+
+    /* Hitung offset agar persis di tengah */
+    const boardWidth = board.getBoundingClientRect().width;
+    const boardCenter = boardWidth / 2;
+
+    /* Offset awal: geser track agar celah (gap) berada persis di boardCenter.
+     * Kita mulai dari set ke-2 agar punya ruang di kiri dan kanan.
+     */
+    const gapCenterOffset = halfWidth * 2 - (metrics.g / 2);
+    let startOffset = gapCenterOffset - boardCenter;
+    
+    /* 
+     * PERBAIKAN: Di mobile (1 logo), kita harus menggeser startOffset sejauh 
+     * setengah logo + setengah gap agar LOGO-nya yang berada di tengah absolut, 
+     * BUKAN celah (gap) antar logonya. Ini mengatasi logo condong ke kiri.
+     */
+    if (isMobile) {
+      startOffset -= (metrics.w + metrics.g) / 2;
+    }
 
     const state = {
       track,
-      currentOffset: halfWidth,
+      currentOffset: startOffset,
       halfWidth,
+      resetLimit: halfWidth - (metrics.g / 2) - boardCenter,
       isHovered: false,
+      logoCount
     };
     rowStates.push(state);
 
-    /* Posisi awal — tampilkan set duplikat (untuk arah scroll ke kanan) */
+    /* Posisi awal */
     track.style.transition = "none";
-    track.style.transform = `translateX(-${halfWidth}px)`;
+    track.style.transform = `translateX(-${state.currentOffset}px)`;
 
     /* ── HOVER PER BARIS ── */
     row.addEventListener("mouseenter", () => {
@@ -168,7 +203,10 @@ document.addEventListener("DOMContentLoaded", () => {
     rowStates.forEach((state) => {
       if (state.isHovered) return;
 
-      state.currentOffset -= STEP_PX;
+      const metrics = getTrackMetrics(state.track);
+      const stepPx = STEP_LOGOS * (metrics.w + metrics.g);
+
+      state.currentOffset -= stepPx;
 
       state.track.style.transition = `transform ${SLIDE_DURATION}ms ease-in-out`;
       state.track.style.transform = `translateX(-${state.currentOffset}px)`;
@@ -177,10 +215,18 @@ document.addEventListener("DOMContentLoaded", () => {
     /* FASE 2 — Setelah slide selesai */
     setTimeout(() => {
 
-      /* Reset seamless untuk baris yang sudah di titik 0 */
+      const boardWidth = board.getBoundingClientRect().width;
+      const boardCenter = boardWidth / 2;
+
+      /* Reset seamless untuk baris yang sudah melewati batas reset */
       rowStates.forEach((state) => {
-        if (state.currentOffset <= 0) {
-          state.currentOffset = state.halfWidth;
+        // Kalkulasi ulang limit (menghindari error jika window di-resize dan vw berubah)
+        const metrics = getTrackMetrics(state.track);
+        const dynamicHalfWidth = state.logoCount * (metrics.w + metrics.g);
+        const dynamicResetLimit = dynamicHalfWidth - (metrics.g / 2) - boardCenter;
+
+        if (state.currentOffset <= dynamicResetLimit) {
+          state.currentOffset += dynamicHalfWidth;
           state.track.style.transition = "none";
           state.track.style.transform = `translateX(-${state.currentOffset}px)`;
           void state.track.offsetHeight; /* force reflow */

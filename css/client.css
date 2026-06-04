@@ -31,107 +31,147 @@
   justify-content: center;
 }
 
-/* ─── PAPAN UTAMA ─────────────────────────────────────────
-   bgclients.png sudah mengandung visual kotak merah sendiri.
-   TIDAK ada border atau background-color dari CSS.
-   border-radius dipakai hanya untuk clip konten agar tidak
-   melebihi sudut visual yang ada di dalam PNG.
+/* ─── VARIABEL LAYOUT 3-BOX ───────────────────────────────
+   --box-overlap : seberapa jauh kotak tengah "keluar" ke
+                   atas dan bawah melampaui kotak kiri-kanan.
+   Ubah nilai ini untuk menyesuaikan proporsi.
+   ──────────────────────────────────────────────────────── */
+:root {
+  /* overlap dikurangi agar tinggi kotak tengah lebih proporsional/lebih pendek */
+  --box-overlap: clamp(10px, 1.5vw, 24px);
+  --box-radius-outer: clamp(28px, 3.5vw, 55px);
+  --box-radius-center: clamp(20px, 2.5vw, 40px);
+  --box-border: 8px;
+  --box-red: #e3000f;
+  /* --box-glow: rgba(227, 0, 15, 0.55); */
+
+  /* Ukuran logo & variabel perbesaran (upscale) */
+  --logo-w: 100px;
+  --logo-g: 12px;
+  --center-scale: 1.35;
+  /* 1.35 = logo membesar 35% di tengah */
+  --center-padding: 8px;
+  /* Padding kecil agar sisi logo tidak menyentuh garis merah */
+}
+
+/* ─── WRAPPER TIGA KOTAK ──────────────────────────────────
+   Posisi relative agar kotak tengah bisa overlap via
+   negative margin dan z-index.
    ──────────────────────────────────────────────────────── */
 .clients-board {
-  /* Background diambil 100% dari PNG — tidak ada warna CSS di sini */
-  background-image: url("../client-img/bgclients.png");
-  background-size: 100% 100%;
-  /* Stretch PNG tepat mengisi elemen */
-  background-repeat: no-repeat;
+  /* Tidak ada background PNG lagi — pure CSS */
+  background: transparent;
 
-  /*
-   * border-radius untuk clip konten agar logo tidak meluap keluar
-   * sudut visual PNG. Sesuaikan nilai ini jika sudut PNG berbeda.
-   * Default: 55px
-   */
-  border-radius: 55px;
-  overflow: hidden;
-  /* Wajib: clip logo yang keluar batas */
-
-  padding: 48px 0;
-  /* Padding atas-bawah; kiri-kanan 0 agar row full width */
+  position: relative;
   width: 90%;
   max-width: 1300px;
+
+  /* Flex column untuk baris marquee */
   display: flex;
   flex-direction: column;
-
-  /*
-   * Jarak antar baris marquee (vertikal).
-   * Ubah nilai ini untuk memberi lebih/kurang ruang antar baris.
-   */
   gap: 20px;
+
+  /* Padding vertikal = overlap agar konten tidak terpotong */
+  padding: clamp(28px, 4vw, 56px) 0;
+
+  /* PENTING: overflow visible agar kotak tengah bisa overlap */
+  overflow: visible;
 }
 
-/* ─── LARGE DESKTOP (≥1440px) ────────────────────────────── */
-/* Layar 15–17 inch atau monitor yang lebih besar               */
-@media (min-width: 1440px) {
-  .clients-board {
-    max-width: 1650px;
-    gap: 26px;
-    padding: 56px 0;
-  }
+/* ─── 3-BOX DECORATION (pseudo-element approach) ──────────
+   Tiga kotak merah divisualisasikan sebagai ::before (seluruh
+   area luar: kiri + kanan sebagai satu kotak besar di belakang)
+   dan .clients-board__center (kotak tengah yang overlap).
 
-  .marquee-item {
-    width: 180px;
-    height: 117px;
-  }
+   Struktur yang dihasilkan secara visual:
+     [ KIRI ]  [ TENGAH (lebih tinggi) ]  [ KANAN ]
+   Di mana TENGAH menimpa KIRI dan KANAN.
+   ──────────────────────────────────────────────────────── */
 
-  .marquee-track {
-    gap: 21px;
-  }
+/* Kotak KIRI + KANAN (Latar Belakang Putih Saja) */
+.clients-board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--box-radius-outer);
+  pointer-events: none;
+  z-index: 0;
+  background: #ffffff;
 }
 
-/* ─── EXTRA LARGE (≥1920px) ─────────────────────────────── */
-/* Monitor 20 inch ke atas — board dan logo membesar penuh    */
-@media (min-width: 1920px) {
-  .clients-board {
-    max-width: 2100px;
-    width: 93%;
-    gap: 32px;
-    padding: 68px 0;
-    border-radius: 68px;
-  }
-
-  .marquee-item {
-    width: 228px;
-    height: 148px;
-  }
-
-  .marquee-track {
-    gap: 23px;
-  }
+/* Efek Blur/Masking Garis Merah Kotak Luar */
+.clients-board::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--box-radius-outer);
+  border: var(--box-border) solid var(--box-red);
+  box-shadow:
+    0 0 8px var(--box-glow),
+    0 0 20px var(--box-glow),
+    inset 0 0 8px rgba(227, 0, 15, 0.08);
+  pointer-events: none;
+  z-index: 0;
+  /* Gradasi masking agar garis horizontal memudar (blur) sebelum masuk ke kotak tengah */
+  -webkit-mask-image: linear-gradient(to right,
+      black 25%,
+      transparent 40%,
+      transparent 60%,
+      black 75%);
+  mask-image: linear-gradient(to right,
+      black 25%,
+      transparent 40%,
+      transparent 60%,
+      black 75%);
 }
 
-/* ─── ULTRA WIDE (≥2400px) ──────────────────────────────── */
-@media (min-width: 2400px) {
-  .clients-board {
-    max-width: 2550px;
-    width: 90%;
-    gap: 40px;
-    padding: 80px 0;
-    border-radius: 80px;
-  }
-
-  .marquee-item {
-    width: 273px;
-    height: 177px;
-  }
-
-  .marquee-track {
-    gap: 29px;
-  }
+/* Kotak TENGAH (Latar Belakang Putih) */
+.clients-board__center {
+  position: absolute;
+  width: calc((var(--logo-w) * var(--center-scale)) + var(--logo-w) + var(--logo-g) + var(--center-padding));
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(-1 * var(--box-overlap));
+  bottom: calc(-1 * var(--box-overlap));
+  border-radius: var(--box-radius-center);
+  z-index: 1;
+  pointer-events: none;
+  background: #ffffff;
 }
+
+/* Efek Blur/Masking Garis Merah Kotak Tengah */
+.clients-board__center::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: var(--box-border) solid var(--box-red);
+  box-shadow:
+    0 0 10px var(--box-glow),
+    0 0 28px var(--box-glow),
+    inset 0 0 10px rgba(227, 0, 15, 0.06);
+  pointer-events: none;
+  /* Gradasi masking agar garis atas dan bawah memudar (blur putih) persis di titik tengahnya */
+  -webkit-mask-image: linear-gradient(to right,
+      black 5%,
+      transparent 50%,
+      black 95%);
+  mask-image: linear-gradient(to right, black 5%, transparent 50%, black 95%);
+}
+
+/* ─── MEDIA QUERIES BESAR DIHAPUS ───
+ * Layout sekarang dibatasi maksimal 1300px (max-width pada .clients-board).
+ * Ini memastikan proporsi kotak tengah dan logo TETAP KONSISTEN di layar >14 inch
+ * atau saat di-zoom out, tidak akan melar/stretching.
+ */
 
 /* ─── SATU BARIS MARQUEE ─────────────────────────────────── */
 .marquee-row {
   width: 100%;
   overflow: hidden;
   position: relative;
+  /* Harus di atas .clients-board__center (z-index 1) agar logo terlihat */
+  z-index: 2;
 
   /*
    * FADE MASK — logo di tepi kiri-kanan memudar secara halus.
@@ -217,7 +257,7 @@
    scale(1.35) = 35% lebih besar (default)
    ─────────────────────────────────────────────────────────────── */
 .marquee-item.is-center {
-  transform: scale(1.35);
+  transform: scale(var(--center-scale));
   z-index: 2;
 }
 
@@ -225,8 +265,13 @@
 
 /* Tablet (900px ke bawah) */
 @media (max-width: 900px) {
+  :root {
+    --box-overlap: 18px;
+    --box-radius-outer: 28px;
+    --box-radius-center: 18px;
+  }
+
   .clients-board {
-    border-radius: 32px;
     padding: 32px 0;
     gap: 14px;
   }
@@ -238,24 +283,77 @@
 }
 
 /* ──────────────────────────────────────────────────────────
-   MOBILE HP (≤ 600px) — behavior khusus HP:
+   MOBILE & TABLET (≤ 768px) — behavior khusus:
      • Geser 1 logo per step (bukan 2)
      • Hanya 1 logo membesar di tengah
-     • Logo lebih kecil
-
-   PENTING: nilai width .marquee-item DAN gap .marquee-track
-   di sini HARUS cocok dengan LOGO_WIDTH & LOGO_GAP
-   di bagian "MOBILE CONFIG" pada client.js.
+     • Logo & kontainer fleksibel proporsional (vw)
    ────────────────────────────────────────────────────────── */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  :root {
+    --box-overlap: 2.5vw;
+    --box-radius-outer: 5vw;
+    /* Radius proporsional seperti di layar iPhone SE */
+    --box-radius-center: 4vw;
+    /* Radius proporsional seperti di layar iPhone SE */
+    --box-border: 4px;
+    /* Border dipertipis (default desktop 8px) */
+
+    /* Ukuran logo proporsional menggunakan vw */
+    --logo-w: 12vw;
+    --logo-g: 4vw;
+    /* Jarak diperbesar agar logo kiri/kanan tidak menyusup masuk ke kotak tengah */
+    --center-padding: 2vw;
+  }
+
+  .clients-board::before,
+  .clients-board::after {
+    border-radius: var(--box-radius-outer) !important;
+  }
+
+  .clients-board::after {
+    border-width: var(--box-border) !important;
+  }
+
+  .clients-board__center {
+    /* Container Grid Khusus Kotak Tengah Wajib 1 Kolom */
+    width: calc((var(--logo-w) * var(--center-scale)) + var(--center-padding));
+    border-radius: var(--box-radius-center) !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .clients-board__center::before {
+    border-width: var(--box-border) !important;
+  }
+
+  .marquee-item.is-center {
+    grid-column: span 1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+    /* Reset margin/posisi tidak beraturan */
+    transform: scale(var(--center-scale)) translate(0, 0) !important;
+    /* Bersihkan sisa transform lain */
+  }
+
+  .marquee-item.is-center .client-logo-img {
+    max-width: 80% !important;
+    /* Batasi ukuran aman di dalam kotak merah */
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
   .clients-board {
-    border-radius: 24px;
-    padding: 28px 0;
-    gap: 10px;
+    padding: 2vw 0 !important;
+    /* Padding diperkecil agar keseluruhan kotak tidak melar ke bawah */
+    gap: 1.5vw !important;
+    /* Jarak vertikal antar baris dirapatkan agar logo tidak terlalu lowong */
   }
 
   .marquee-row {
-    /* Perlebar fade mask agar terlihat lebih rapi di layar sempit */
     -webkit-mask-image: linear-gradient(to right,
         transparent 0%,
         black 12%,
@@ -269,33 +367,55 @@
   }
 
   .marquee-track {
-    /*
-     * GAP MOBILE: harus sama dengan LOGO_GAP di client.js (mobile config)
-     * Default mobile: 8px
-     */
-    gap: 8px;
+    gap: var(--logo-g);
   }
 
   .marquee-item {
-    /*
-     * LEBAR LOGO MOBILE: harus sama dengan LOGO_WIDTH di client.js (mobile config)
-     * Default mobile: 65px × 44px
-     * Kecilkan jika masih terlalu besar di HP Anda.
-     */
-    width: 65px;
-    height: 44px;
+    /* Mengecil otomatis mengikuti kontainer HP (Skala Fleksibel) */
+    width: var(--logo-w);
+    height: calc(var(--logo-w) * 0.65);
+    /* pertahankan rasio aspek logo */
   }
 }
 
-/* HP sangat kecil (≤ 400px) */
+/* HP sangat kecil (≤ 400px) - Tweak minor */
 @media (max-width: 400px) {
-  .marquee-item {
-    width: 58px;
-    height: 40px;
+  :root {
+    --box-overlap: 2vw;
   }
 }
 
-.marquee-item.is-center {
-  transform: scale(1.2);
+/* ============================================================
+   FINE-TUNING SPESIFIK LAPTOP 14 INCH (Zoom 100%)
+   Range layar: 1360px - 1600px
+   ============================================================ */
+@media screen and (min-width: 1360px) and (max-width: 1600px) {
+  .marquee-track {
+    /* 
+     * MICRO-ADJUSTMENT: 
+     * Menggeser seluruh lintasan logo sebesar 14px ke arah kanan.
+     * Tweak 1 baris ini akan menyelesaikan 3 masalah sekaligus:
+     * 1. Menarik 2 logo besar tepat ke titik tengah absolut pilar.
+     * 2. Menarik barisan logo di kotak KANAN menjauh dari pilar (memberi jarak aman/padding).
+     * 3. Menarik barisan logo di kotak KIRI mendekat ke pilar (menyeimbangkan gap 50-50).
+     */
+    margin-left: calc(50% + 14px);
+  }
 }
+
+/* ============================================================
+   FINE-TUNING SPESIFIK ULTRA WIDE (Layar Besar / Zoom Out)
+   Range layar: 1920px ke atas
+   ============================================================ */
+@media screen and (min-width: 1920px) {
+  .marquee-track {
+    /* 
+     * MICRO-ADJUSTMENT: 
+     * Menggeser seluruh lintasan logo sebesar 16px ke arah KIRI.
+     * Tweak ini mengkompensasi pergeseran visual (drift) pada layar ultra-lebar:
+     * 1. Menarik 2 logo besar di tengah kembali persis ke tengah absolut (menghapus sisa ruang kosong di kiri).
+     * 2. Menarik barisan logo di kotak KIRI menjauh dari pilar tengah (mengembalikan jarak aman/padding).
+     */
+    margin-left: calc(50% - 16px);
+  }
 }
