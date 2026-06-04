@@ -48,8 +48,8 @@
   /* Ukuran logo & variabel perbesaran (upscale) */
   --logo-w: 100px;
   --logo-g: 12px;
-  --center-scale: 1.35;
-  /* 1.35 = logo membesar 35% di tengah */
+  --center-scale: 1.15;
+  /* 1.15 = logo membesar 15% di tengah (mencegah overflow/cropping) */
   --center-padding: 8px;
   /* Padding kecil agar sisi logo tidak menyentuh garis merah */
 }
@@ -128,7 +128,8 @@
 /* Kotak TENGAH (Latar Belakang Putih) */
 .clients-board__center {
   position: absolute;
-  width: calc((var(--logo-w) * var(--center-scale)) + var(--logo-w) + var(--logo-g) + var(--center-padding));
+  /* Rumus disesuaikan untuk membingkai persis 2 logo yang diperbesar */
+  width: calc((var(--logo-w) * var(--center-scale) * 2) + var(--logo-g) + (var(--center-padding) * 2));
   left: 50%;
   transform: translateX(-50%);
   top: calc(-1 * var(--box-overlap));
@@ -390,17 +391,7 @@
    Range layar: 1360px - 1600px
    ============================================================ */
 @media screen and (min-width: 1360px) and (max-width: 1600px) {
-  .marquee-track {
-    /* 
-     * MICRO-ADJUSTMENT: 
-     * Menggeser seluruh lintasan logo sebesar 14px ke arah kanan.
-     * Tweak 1 baris ini akan menyelesaikan 3 masalah sekaligus:
-     * 1. Menarik 2 logo besar tepat ke titik tengah absolut pilar.
-     * 2. Menarik barisan logo di kotak KANAN menjauh dari pilar (memberi jarak aman/padding).
-     * 3. Menarik barisan logo di kotak KIRI mendekat ke pilar (menyeimbangkan gap 50-50).
-     */
-    margin-left: calc(50% + 14px);
-  }
+  /* margin-left adjustment removed to avoid breaking JS offset calculation */
 }
 
 /* ============================================================
@@ -408,14 +399,46 @@
    Range layar: 1920px ke atas
    ============================================================ */
 @media screen and (min-width: 1920px) {
+  /* margin-left adjustment removed to avoid breaking JS offset calculation */
+}
+
+/* ============================================================
+   FINE-TUNING SPESIFIK ZOOM OUT EXTREME (50%) / ULTRA WIDE
+   Range layar: 2560px ke atas
+   ============================================================ */
+@media screen and (min-width: 2560px) {
+  :root {
+    /* Skala 1.5x untuk variabel inti agar membesar proporsional */
+    --box-overlap: 36px;
+    --box-radius-outer: 82px;
+    --box-radius-center: 60px;
+    --box-border: 12px;
+    --logo-w: 150px;
+    --logo-g: 18px;
+    --center-padding: 12px;
+  }
+
+  .client-hero__title {
+    /* Judul membesar dari max 4rem menjadi 6rem */
+    font-size: 6rem;
+  }
+
+  .clients-board {
+    /* Wrapper utama membesar dari max 1300px menjadi 1950px */
+    max-width: 1950px;
+    gap: 30px;
+    padding: 84px 0;
+  }
+
+  .marquee-item {
+    /* Item membesar 1.5x */
+    width: var(--logo-w);
+    height: 97.5px;
+  }
+
   .marquee-track {
-    /* 
-     * MICRO-ADJUSTMENT: 
-     * Menggeser seluruh lintasan logo sebesar 16px ke arah KIRI.
-     * Tweak ini mengkompensasi pergeseran visual (drift) pada layar ultra-lebar:
-     * 1. Menarik 2 logo besar di tengah kembali persis ke tengah absolut (menghapus sisa ruang kosong di kiri).
-     * 2. Menarik barisan logo di kotak KIRI menjauh dari pilar tengah (mengembalikan jarak aman/padding).
-     */
-    margin-left: calc(50% - 16px);
+    /* Gap membesar 1.5x */
+    gap: var(--logo-g);
+    /* margin-left adjustment removed to avoid breaking JS offset calculation */
   }
 }
