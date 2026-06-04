@@ -47,9 +47,9 @@
 
   /* Ukuran logo & variabel perbesaran (upscale) */
   --logo-w: 100px;
-  --logo-g: 12px;
-  --center-scale: 1.15;
-  /* 1.15 = logo membesar 15% di tengah (mencegah overflow/cropping) */
+  --logo-g: 40px;
+  --center-scale: 1.4;
+  /* 1.4 = logo membesar 40% di tengah (mencegah overflow/cropping) */
   --center-padding: 8px;
   /* Padding kecil agar sisi logo tidak menyentuh garis merah */
 }
@@ -69,7 +69,7 @@
   /* Flex column untuk baris marquee */
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
 
   /* Padding vertikal = overlap agar konten tidak terpotong */
   padding: clamp(28px, 4vw, 56px) 0;
@@ -173,6 +173,9 @@
   position: relative;
   /* Harus di atas .clients-board__center (z-index 1) agar logo terlihat */
   z-index: 2;
+  /* Padding dan negative margin agar logo yang di-scale tidak terpotong oleh overflow: hidden */
+  padding: 30px 0;
+  margin: -30px 0;
 
   /*
    * FADE MASK — logo di tepi kiri-kanan memudar secara halus.
@@ -201,7 +204,7 @@
    * Nilai ini dibaca otomatis oleh client.js dari DOM —
    * tidak perlu sinkronisasi manual. Default: 12px
    */
-  gap: 12px;
+  gap: var(--logo-g);
 
   width: max-content;
   will-change: transform;
@@ -304,6 +307,8 @@
     --logo-g: 4vw;
     /* Jarak diperbesar agar logo kiri/kanan tidak menyusup masuk ke kotak tengah */
     --center-padding: 2vw;
+    /* Kembalikan ukuran efek perbesaran di tengah ke 1.15 khusus mobile */
+    --center-scale: 1.15;
   }
 
   .clients-board::before,
@@ -414,7 +419,7 @@
     --box-radius-center: 60px;
     --box-border: 12px;
     --logo-w: 150px;
-    --logo-g: 18px;
+    --logo-g: 55px;
     --center-padding: 12px;
   }
 
@@ -426,7 +431,7 @@
   .clients-board {
     /* Wrapper utama membesar dari max 1300px menjadi 1950px */
     max-width: 1950px;
-    gap: 30px;
+    gap: 60px;
     padding: 84px 0;
   }
 
