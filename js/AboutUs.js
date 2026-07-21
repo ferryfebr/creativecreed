@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(updateCount);
       } else {
         // Jika sudah selesai, pastikan angka finalnya presisi
-        counter.innerText = target;
+        counter.innerText = target + "+";
       }
     };
 

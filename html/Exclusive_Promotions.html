@@ -19,30 +19,219 @@
 </head>
 
 <body class="page-clients page-promotions">
-  <div id="navbar-placeholder"></div>
+<div id="navbar-placeholder"></div>
 
-  <!-- <header class="about-hero fade-in-on-load" style="animation-duration: 1s">
+  <header class="about-hero fade-in-on-load" style="animation-duration: 1s">
     <div class="about-hero__inner">
-      <h1 class="about-hero__title">Exclusive Promotions</h1>
+      <h1 class="about-hero__title">Exclusive Promotion</h1>
     </div>
-  </header> -->
+  </header>
 
   <!-- Coming Soon Section -->
-  <section class="coming-soon-section">
-    <div class="coming-soon-content">
-      <h2 class="coming-soon-title">
-        Coming <span class="text-red">Soon</span>
-      </h2>
-      <p class="coming-soon-subtitle">
-        We are preparing exciting new offers just for you. Stay tuned!
-      </p>
+<!-- EXCLUSIVE PROMOTION SECTION -->
+    <section id="promotion" class="about-section scroll-section" aria-label="Exclusive Promotion">
+      <div class="promotion-stage">
+            <div class="promotion-wrapper pure-fade-in">
+              <!-- Background Frame Image (z-index: 0) -->
+              <img 
+                src="../promotion/bgpromotion.png" 
+                alt="Exclusive Promotions" 
+                class="promotion-bg-img"
+              />
+              
+              <!-- Video Content (paused preview + play to open modal) -->
+              <div class="promotion-video-container" id="promotionVideoPreview">
+                <video
+                  id="promotionPreviewVideo"
+                  class="promotion-video"
+                  playsinline
+                  preload="metadata"
+                  muted
+                  poster="../promotion/thumbnail.PNG"
+                >
+                  <source src="../promotion/vidpromotion.mp4" type="video/mp4" />
+                </video>
+                <button
+                  type="button"
+                  class="promotion-play-btn"
+                  id="promotionPlayBtn"
+                  aria-label="Play promotion video"
+                >
+                  <i class="fas fa-play" aria-hidden="true"></i>
+                </button>
+              </div>
 
-      <!-- Attractive decorative elements -->
-      <div class="decorative-dots">
-        <span></span><span></span><span></span>
+              <!-- Posters carousel -->
+              <div
+                class="promotion-posters-container"
+                id="promotionPostersCarousel"
+              >
+                <div class="promotion-posters-viewport">
+                  <div class="promotion-posters-track" id="promotionPostersTrack">
+                    <button
+                      type="button"
+                      class="promotion-poster-trigger is-center"
+                      data-poster-src="../promotion/poster1.png"
+                      data-poster-index="0"
+                      aria-label="View promotion poster 1"
+                    >
+                      <img
+                        src="../promotion/poster1.png"
+                        alt="Promotion Poster 1"
+                        class="promotion-poster"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="promotion-poster-trigger is-side"
+                      data-poster-src="../promotion/poster2.png"
+                      data-poster-index="1"
+                      aria-label="View promotion poster 2"
+                    >
+                      <img
+                        src="../promotion/poster2.png"
+                        alt="Promotion Poster 2"
+                        class="promotion-poster"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="promotion-poster-trigger is-side"
+                      data-poster-src="../promotion/poster3.png"
+                      data-poster-index="2"
+                      aria-label="View promotion poster 3"
+                    >
+                      <img
+                        src="../promotion/poster3.png"
+                        alt="Promotion Poster 3"
+                        class="promotion-poster"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="promotion-poster-trigger is-side"
+                      data-poster-src="../promotion/poster4.png"
+                      data-poster-index="3"
+                      aria-label="View promotion poster 4"
+                    >
+                      <img
+                        src="../promotion/poster4.png"
+                        alt="Promotion Poster 4"
+                        class="promotion-poster"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="promotion-poster-trigger is-side"
+                      data-poster-src="../promotion/poster5.png"
+                      data-poster-index="4"
+                      aria-label="View promotion poster 5"
+                    >
+                      <img
+                        src="../promotion/poster5.png"
+                        alt="Promotion Poster 5"
+                        class="promotion-poster"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="promotion-poster-trigger is-side"
+                      data-poster-src="../promotion/poster6.png"
+                      data-poster-index="5"
+                      aria-label="View promotion poster 6"
+                    >
+                      <img
+                        src="../promotion/poster6.png"
+                        alt="Promotion Poster 6"
+                        class="promotion-poster"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+    </section>
+
+        <!-- Promotion video modal -->
+    <div
+      class="promo-modal"
+      id="promoModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="promoModalTitle"
+      aria-hidden="true"
+      hidden
+    >
+      <div class="promo-modal-backdrop" id="promoModalBackdrop"></div>
+      <div class="promo-modal-center">
+        <div class="promo-modal-dialog">
+          <div class="promo-modal-media-wrap" id="promoModalMediaWrap">
+            <video
+              id="promoModalVideo"
+              class="promo-modal-video"
+              playsinline
+              controls
+              controlsList="nodownload noplaybackrate"
+              disablePictureInPicture
+              preload="metadata"
+            >
+              <source src="../promotion/vidpromotion.mp4" type="video/mp4" />
+            </video>
+            <img
+              id="promoModalPoster"
+              class="promo-modal-poster-img"
+              alt=""
+              hidden
+            />
+          </div>
+          <div class="promo-modal-body">
+            <h2 id="promoModalTitle" class="visually-hidden">Exclusive Promotion</h2>
+            <p>Need support for an upcoming pitch or event project?</p>
+            <p>
+              Nebula X partners with event management companies to provide creative
+              content and event technology solutions that help bring ideas to life.
+            </p>
+            <p>
+              From proposal development, 3D event visualisation and animation to event
+              registration, AI experiences and interactive technologies, we help
+              strengthen both your pitch and project delivery.
+            </p>
+            <p>
+              Consider us your creative and event tech partner whenever you need
+              additional expertise, manpower or specialised solutions.
+            </p>
+            <p>Let&rsquo;s collaborate on your next project.</p>
+            <div class="promo-modal-footer">
+              <a
+                href="https://wa.me/60108064014"
+                class="promo-modal-contact"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Contact Nebula X on WhatsApp"
+              >
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                +60 10 806 4014
+              </a>
+              <a
+                href="https://www.nebulax.my"
+                class="promo-modal-website"
+                target="_blank"
+                rel="noopener noreferrer"
+                >www.nebulax.my</a>
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="promo-modal-close"
+          id="promoModalClose"
+          aria-label="Close promotion"
+        >
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
-  </section>
 
   <div id="footer-placeholder"></div>
   <script src="../js/script.js"></script>

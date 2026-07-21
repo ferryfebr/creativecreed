@@ -132,3 +132,10 @@
   margin: 0;
   line-height: 1;
 }
+
+/* Mobile: perkecil font counter */
+@media (max-width: 768px) {
+  .counter-overlay {
+    font-size: 2.8rem;
+  }
+}

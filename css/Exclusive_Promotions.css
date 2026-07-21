@@ -1,104 +1,522 @@
 /* =========================================
-   EXCLUSIVE PROMOTIONS - COMING SOON
+   EXCLUSIVE PROMOTIONS
    ========================================= */
 
-.coming-soon-section {
+/* ─── Promotion Section ─── */
+#promotion {
+  padding: 4rem 0;
+  text-align: center;
+}
+
+/* ============================================================
+   WRAPPER — relative container that holds the frame background
+   and all child elements.
+   ============================================================ */
+.promotion-wrapper {
+  position: relative;
+  display: inline-block;
+  max-width: 74%;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   BACKGROUND FRAME IMAGE (z-index: 0)
+   ============================================================ */
+.promotion-bg-img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  display: block;
+  pointer-events: none;
+}
+
+/* ============================================================
+   VIDEO CONTAINER
+   Positioned absolutely inside the wrapper, on top of the bg.
+   ────────────────────────────────────────────────────────────
+   MANUAL ADJUSTMENT GUIDE:
+   - Change `top` and `left` to move the video horizontally/vertically
+   - Change `width` and `height` to resize the video area
+   - All values are in percent relative to the wrapper size
+   ============================================================ */
+.promotion-video-container {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  width: 58%;
+  height: 38%;
+  border-radius: 24px;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  margin-top: -20px;
+}
+
+.promotion-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  background: #000;
+  pointer-events: none;
+}
+
+/* ─── Play Button ─── */
+.promotion-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: clamp(52px, 12vw, 76px);
+  height: clamp(52px, 12vw, 76px);
+  border: none;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 50vh;
-  padding: 4rem 2rem;
-  background: transparent;
-  position: relative;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.promotion-play-btn i {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  margin-left: 4px;
+}
+
+.promotion-play-btn:hover,
+.promotion-play-btn:focus-visible {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: #e02020;
+  box-shadow: 0 6px 28px #e02020;
+  outline: none;
+}
+
+/* ============================================================
+   POSTERS CAROUSEL CONTAINER
+   ============================================================ */
+.promotion-posters-container {
+  position: absolute;
+  right: 4.5%;
+  width: 59%;
+  height: auto;
+  bottom: calc(8% + 50px);
+  top: auto;
+  z-index: 1;
   overflow: hidden;
-  perspective: 1000px;
-}
-
-.coming-soon-content {
-  text-align: center;
-  z-index: 2;
-  animation: fadeUp 1s ease-out forwards;
-  opacity: 0;
-  transform: translateY(30px);
-  transform-style: preserve-3d;
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.coming-soon-title {
-  font-family: "Poppins", sans-serif;
-  font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  transition: color var(--transition);
-  margin-top: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.coming-soon-title .text-red {
-  color: var(--accent-red, #e02020);
-  /* text-shadow: 0 0 20px rgba(224, 32, 32, 0.4); */
-}
-
-.coming-soon-subtitle {
-  font-family: "Inter", sans-serif;
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: var(--text-muted, #aaa);
-  max-width: 600px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
-  transform: translateZ(20px);
-}
-
-/* Decorative Dots */
-.decorative-dots {
+  user-select: none;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-top: 2rem;
-  transform: translateZ(10px);
 }
 
-.decorative-dots span {
+.promotion-posters-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.promotion-posters-track {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(10px, 2.5%, 18px);
+  padding: 6px 0;
+  will-change: transform;
+}
+
+.promotion-poster-trigger {
+  flex: 0 0 auto;
+  width: 30%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 20px;
+  line-height: 0;
+  transform: scale(0.76);
+  transform-origin: center center;
+  opacity: 1;
+  z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promotion-poster-trigger.is-center {
+  transform: scale(1);
+  z-index: 3;
+}
+
+.promotion-poster-trigger.is-side {
+  transform: scale(0.76);
+}
+
+.promotion-poster-trigger.is-center:hover,
+.promotion-poster-trigger.is-center:focus-visible {
+  transform: scale(1.04);
+  outline: none;
+}
+
+.promotion-poster-trigger.is-side:hover,
+.promotion-poster-trigger.is-side:focus-visible {
+  transform: scale(0.8);
+  outline: none;
+}
+
+.promotion-poster {
+  width: 100%;
+  height: auto;
   display: block;
-  width: 12px;
-  height: 12px;
-  background-color: var(--accent-red, #e02020);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.promotion-poster-trigger.is-center .promotion-poster {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Promotion Modal ─── */
+body.promo-modal-open {
+  overflow: hidden;
+}
+
+.promo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 40px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.promo-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.promo-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 4, 22, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.promo-modal-center {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  width: min(520px, calc(100vw - 96px));
+  max-width: calc(100% - 32px);
+  transform: translateY(16px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.promo-modal.is-poster-mode .promo-modal-center {
+  width: min(380px, calc(100vw - 96px));
+  max-width: min(400px, calc(100% - 32px));
+}
+
+.promo-modal.is-open .promo-modal-center {
+  transform: translateY(0) scale(1);
+}
+
+.promo-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-height: calc(100vh - 32px);
+  overflow: hidden;
+  border-radius: 20px;
+  background: #4a1012;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.promo-modal.is-poster-mode .promo-modal-dialog {
+  max-height: calc(100vh - 48px);
+  border-radius: 16px;
+}
+
+.promo-modal-close {
+  position: absolute;
+  left: calc(100% + 14px);
+  top: 0;
+  width: 44px;
+  height: 44px;
+  border: none;
   border-radius: 50%;
-  animation: pulse 1.5s infinite alternate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1a0a2e;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
-.decorative-dots span:nth-child(2) {
-  animation-delay: 0.5s;
+.promo-modal-close:hover,
+.promo-modal-close:focus-visible {
+  transform: scale(1.06);
+  background: #f0e8ff;
+  outline: none;
 }
 
-.decorative-dots span:nth-child(3) {
-  animation-delay: 1s;
+.promo-modal-close i {
+  font-size: 1.1rem;
 }
 
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+.promo-modal-media-wrap {
+  flex-shrink: 0;
+  background: #000;
+  line-height: 0;
+}
+
+.promo-modal-video {
+  width: 100%;
+  height: auto;
+  max-height: 52vh;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+.promo-modal.is-poster-mode .promo-modal-media-wrap {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: hidden;
+  background: transparent;
+  line-height: 0;
+}
+
+.promo-modal.is-poster-mode .promo-modal-poster-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+}
+
+.promo-modal.is-poster-mode .promo-modal-video {
+  display: none;
+}
+
+.promo-modal-body {
+  padding: 1.35rem 1.5rem 1.5rem;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: "Barlow", "Segoe UI", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  overflow-y: auto;
+}
+
+.promo-modal.is-poster-mode .promo-modal-body {
+  padding: 1rem 1.15rem 1.15rem;
+  font-size: 0.8rem;
+  line-height: 1.48;
+}
+
+.promo-modal-body p {
+  margin: 0 0 0.85rem;
+}
+
+.promo-modal.is-poster-mode .promo-modal-body p {
+  margin: 0 0 0.65rem;
+}
+
+.promo-modal-body > p:last-of-type {
+  margin-bottom: 1.1rem;
+}
+
+.promo-modal.is-poster-mode .promo-modal-body > p:last-of-type {
+  margin-bottom: 0.85rem;
+}
+
+.promo-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 0.25rem;
+}
+
+.promo-modal-contact,
+.promo-modal-website {
+  color: #f5c842;
+  text-decoration: none;
+  font-family: "Flexo", "Segoe UI", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.promo-modal.is-poster-mode .promo-modal-contact,
+.promo-modal.is-poster-mode .promo-modal-website {
+  font-size: 0.78rem;
+}
+
+.promo-modal-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.promo-modal.is-poster-mode .promo-modal-contact {
+  gap: 6px;
+}
+
+.promo-modal.is-poster-mode .promo-modal-close {
+  width: 38px;
+  height: 38px;
+}
+
+.promo-modal-contact:hover,
+.promo-modal-website:hover,
+.promo-modal-contact:focus-visible,
+.promo-modal-website:focus-visible {
+  color: #ffe566;
+  opacity: 0.95;
+  outline: none;
+}
+
+.promo-modal-website {
+  margin-left: auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 991px) {
+  .promotion-wrapper {
+    max-width: 95%;
+    margin-top: -50px;
+    margin-bottom: -20px;
   }
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.5;
+@media (max-width: 768px) {
+  .promotion-wrapper {
+    max-width: calc(100% - 32px);
   }
-
-  100% {
-    transform: scale(1.5);
-    opacity: 1;
-    box-shadow: 0 0 10px rgba(224, 32, 32, 0.8);
+  .promotion-video-container {
+    border-radius: 12px;
+  }
+  .promotion-poster-trigger,
+  .promotion-poster {
+    border-radius: 12px;
+  }
+  .promotion-poster-trigger {
+    width: 22%;
+  }
+  .promotion-poster-trigger.is-side {
+    transform: scale(0.68);
+  }
+  .promotion-poster-trigger.is-center {
+    transform: scale(1);
   }
 }
 
-/* Light Theme */
-body.light-theme .coming-soon-title {
-  color: #111;
-  text-shadow: none;
+@media (max-width: 575px) {
+  #promotion .promotion-posters-container {
+    top: 52%;
+    bottom: auto;
+    width: 64%;
+  }
+  .promotion-video-container {
+    top: 15%;
+    height: 40%;
+  }
+  .promotion-poster-trigger {
+    width: 25%;
+  }
+  .promotion-poster-trigger.is-side {
+    transform: scale(0.65);
+  }
+}
+
+@media (max-width: 768px) {
+  .promo-modal-center {
+    width: min(400px, calc(100vw - 72px));
+    max-width: calc(100% - 20px);
+  }
+  .promo-modal-dialog {
+    border-radius: 16px;
+  }
+  .promo-modal .promo-modal-close {
+    left: auto;
+    right: 10px;
+    top: 10px;
+    width: 32px;
+    height: 32px;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+  .promo-modal .promo-modal-close i {
+    font-size: 0.9rem;
+  }
+  .promo-modal-video {
+    max-height: 58vh;
+  }
+  .promo-modal-body {
+    padding: 1rem 1.1rem 1.2rem;
+    font-size: 0.82rem;
+    max-height: 42vh;
+    overflow-y: auto;
+  }
+  .promo-modal.is-poster-mode .promo-modal-center {
+    width: min(320px, calc(100vw - 72px));
+    max-width: min(340px, calc(100% - 20px));
+  }
+  .promo-modal.is-poster-mode .promo-modal-dialog {
+    border-radius: 14px;
+  }
+  .promo-modal.is-poster-mode .promo-modal-body {
+    padding: 0.85rem 0.95rem 1rem;
+    font-size: 0.76rem;
+  }
+  .promo-modal.is-poster-mode .promo-modal-contact,
+  .promo-modal.is-poster-mode .promo-modal-website {
+    font-size: 0.72rem;
+  }
 }
