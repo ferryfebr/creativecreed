@@ -7,6 +7,8 @@
         const closeBtn = document.getElementById("promoModalClose");
         const modalVideo = document.getElementById("promoModalVideo");
         const modalPoster = document.getElementById("promoModalPoster");
+        const modalBody = document.getElementById("promoModalBody");
+        const modalCopy = document.getElementById("promoModalCopy");
         const postersCarousel = document.getElementById("promotionPostersCarousel");
 
         if (!modal || !modalVideo || !modalPoster) return;
@@ -21,9 +23,10 @@
           modalPoster.hidden = true;
           modalVideo.hidden = false;
           modalVideo.controls = true;
+          if (modalBody) modalBody.hidden = true;
         }
 
-        function showPosterMode(src, alt) {
+        function showPosterMode(src, alt, index) {
           modal.classList.add("is-poster-mode");
           modalVideo.pause();
           modalVideo.currentTime = 0;
@@ -32,6 +35,18 @@
           modalPoster.src = src;
           modalPoster.alt = alt || "Promotion poster";
           modalPoster.hidden = false;
+          if (modalBody) modalBody.hidden = false;
+          if (modalCopy) {
+            const template = document.getElementById("posterText-" + index);
+            modalCopy.innerHTML = "";
+            if (template) {
+              modalCopy.append(template.content.cloneNode(true));
+            }
+          }
+        }
+
+        function resetPosterText() {
+          if (modalCopy) modalCopy.innerHTML = "";
         }
 
         function openVideoModal() {
@@ -53,9 +68,10 @@
             trigger.dataset.posterSrc ||
             trigger.querySelector(".promotion-poster")?.src;
           const alt = trigger.querySelector(".promotion-poster")?.alt || "";
+          const index = parseInt(trigger.dataset.posterIndex, 10) || 0;
           if (!src) return;
 
-          showPosterMode(src, alt);
+          showPosterMode(src, alt, index);
           modal.hidden = false;
           modal.setAttribute("aria-hidden", "false");
           modal.classList.add("is-open");
@@ -71,6 +87,8 @@
           modalVideo.hidden = false;
           modalPoster.hidden = true;
           modalPoster.removeAttribute("src");
+          if (modalBody) modalBody.hidden = true;
+          resetPosterText();
           window.setTimeout(() => {
             if (!modal.classList.contains("is-open")) {
               modal.hidden = true;

@@ -224,7 +224,7 @@ body.promo-modal-open {
   position: relative;
   z-index: 1;
   display: inline-block;
-  width: min(520px, calc(100vw - 96px));
+  width: min(676px, calc(100vw - 96px));
   max-width: calc(100% - 32px);
   transform: translateY(16px) scale(0.97);
   transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
@@ -324,6 +324,11 @@ body.promo-modal-open {
   display: none;
 }
 
+.promo-modal.is-poster-mode .promo-modal-close {
+  width: 38px;
+  height: 38px;
+}
+
 .promo-modal-body {
   padding: 1.35rem 1.5rem 1.5rem;
   color: rgba(255, 255, 255, 0.92);
@@ -339,21 +344,23 @@ body.promo-modal-open {
   padding: 1rem 1.15rem 1.15rem;
   font-size: 0.8rem;
   line-height: 1.48;
+  max-height: 46vh;
+  flex-shrink: 1;
 }
 
-.promo-modal-body p {
+.promo-modal-copy p {
   margin: 0 0 0.85rem;
 }
 
-.promo-modal.is-poster-mode .promo-modal-body p {
+.promo-modal.is-poster-mode .promo-modal-copy p {
   margin: 0 0 0.65rem;
 }
 
-.promo-modal-body > p:last-of-type {
+.promo-modal-copy > p:last-of-type {
   margin-bottom: 1.1rem;
 }
 
-.promo-modal.is-poster-mode .promo-modal-body > p:last-of-type {
+.promo-modal.is-poster-mode .promo-modal-copy > p:last-of-type {
   margin-bottom: 0.85rem;
 }
 
@@ -393,11 +400,6 @@ body.promo-modal-open {
 
 .promo-modal.is-poster-mode .promo-modal-contact {
   gap: 6px;
-}
-
-.promo-modal.is-poster-mode .promo-modal-close {
-  width: 38px;
-  height: 38px;
 }
 
 .promo-modal-contact:hover,
@@ -475,9 +477,12 @@ body.promo-modal-open {
 }
 
 @media (max-width: 768px) {
+  .promo-modal {
+    padding: clamp(8px, 2vw, 16px);
+  }
   .promo-modal-center {
-    width: min(400px, calc(100vw - 72px));
-    max-width: calc(100% - 20px);
+    width: min(676px, calc(100vw - 24px));
+    max-width: calc(100% - 8px);
   }
   .promo-modal-dialog {
     border-radius: 16px;
@@ -502,18 +507,15 @@ body.promo-modal-open {
     padding: 1rem 1.1rem 1.2rem;
     font-size: 0.82rem;
     max-height: 42vh;
-    overflow-y: auto;
   }
   .promo-modal.is-poster-mode .promo-modal-center {
     width: min(320px, calc(100vw - 72px));
     max-width: min(340px, calc(100% - 20px));
   }
-  .promo-modal.is-poster-mode .promo-modal-dialog {
-    border-radius: 14px;
-  }
   .promo-modal.is-poster-mode .promo-modal-body {
     padding: 0.85rem 0.95rem 1rem;
     font-size: 0.76rem;
+    max-height: 40vh;
   }
   .promo-modal.is-poster-mode .promo-modal-contact,
   .promo-modal.is-poster-mode .promo-modal-website {

@@ -762,55 +762,114 @@
   </div>
 
   <section id="contact" class="contact-section scroll-section scroll-reveal" aria-label="Contact us">
-    <div class="container contact-content scroll-fade">
-      <div class="contact-card-redesign">
-        <h2 class="contact-title text-center">
-          WE'RE ALWAYS READY TO HELP YOU<br />
-          AND ANSWER YOUR QUESTIONS
-        </h2>
-
-        <div class="contact-click-here">
-          CLICK <span class="text-gradient-pink">HERE</span>
-          <span class="animated-arrows">
-            <i class="fa-solid fa-angles-down"></i>
-          </span>
-        </div>
-
-        <div class="contact-big-icons">
-          <a href="https://linktr.ee/CreativeCreed" target="_blank" rel="noreferrer" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-          </a>
-          <a href="mailto:creativecreed.associates@gmail.com" aria-label="Email">
-            <i class="fas fa-envelope"></i>
-          </a>
-        </div>
-
-        <div class="contact-social-title">OUR SOCIAL MEDIA</div>
-
-        <div class="contact-social-icons">
-          <a href="https://www.linkedin.com/company/creative-creed-associates-sdn-bhd/" aria-label="LinkedIn"
-            class="social-circle">
+    <div class="container contact-new-container">
+      <div class="contact-left">
+        <h2 class="contact-heading">Get In Touch</h2>
+        <p class="contact-description">
+          Do not hesitate to reach out. Just fill in the contact form here and we'll be sure to reply as fast as possible.
+        </p>
+        <p class="contact-follow">follow us</p>
+        <div class="contact-social-circles">
+          <a href="https://www.linkedin.com/company/creative-creed-associates-sdn-bhd/" target="_blank" rel="noreferrer"
+            aria-label="LinkedIn" class="contact-social-circle">
             <i class="fab fa-linkedin-in"></i>
           </a>
-          <a href="https://www.instagram.com/creative.creed" aria-label="Instagram" class="social-circle">
+          <a href="https://www.instagram.com/creative.creed" target="_blank" rel="noreferrer" aria-label="Instagram"
+            class="contact-social-circle">
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="https://www.threads.com/@creative.creed?igshid=NTc4MTIwNjQ2YQ==" aria-label="Threads"
-            class="social-circle">
+          <a href="https://www.threads.com/@creative.creed?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noreferrer"
+            aria-label="Threads" class="contact-social-circle">
             <i class="fa-brands fa-threads"></i>
           </a>
-          <a href="https://www.facebook.com/creativecreedassociates" aria-label="Facebook" class="social-circle">
+          <a href="https://www.facebook.com/creativecreedassociates" target="_blank" rel="noreferrer"
+            aria-label="Facebook" class="contact-social-circle">
             <i class="fab fa-facebook-f"></i>
           </a>
-          <a href="https://www.tiktok.com/@creativecreed" aria-label="TikTok" class="social-circle">
+          <a href="https://www.tiktok.com/@creativecreed" target="_blank" rel="noreferrer" aria-label="TikTok"
+            class="contact-social-circle">
             <i class="fab fa-tiktok"></i>
           </a>
         </div>
+      </div>
+
+      <div class="contact-right">
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="from_name" placeholder="Name" required />
+          </div>
+          <div class="contact-form-row">
+            <div class="form-group">
+              <label for="company">Company Name</label>
+              <input type="text" id="company" name="company" placeholder="Company Name" />
+            </div>
+            <div class="form-group">
+              <label for="position">Position</label>
+              <input type="text" id="position" name="position" placeholder="Position" />
+            </div>
+          </div>
+          <div class="contact-form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="reply_to" placeholder="Email" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="Phone Number" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Message" rows="5"></textarea>
+          </div>
+          <button type="submit" class="btn-send">Send</button>
+        </form>
       </div>
     </div>
   </section>
 
   <div id="footer-placeholder"></div>
+
+  <a href="https://linktr.ee/CreativeCreed" target="_blank" rel="noreferrer" class="whatsapp-float"
+    aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("dZgub0H30thaPdgG1");
+
+      const form = document.getElementById("contactForm");
+      const btn = form.querySelector(".btn-send");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        btn.textContent = "Sending...";
+        btn.disabled = true;
+
+        emailjs.sendForm("service_creativecreed", "template_flja9eg", form)
+          .then(function () {
+            btn.textContent = "Sent!";
+            btn.style.background = "#fff";
+            btn.style.color = "#c41e1e";
+            form.reset();
+            setTimeout(function () {
+              btn.textContent = "Send";
+              btn.style.background = "transparent";
+              btn.style.color = "#fff";
+              btn.disabled = false;
+            }, 2500);
+          }, function (err) {
+            btn.textContent = "Error, try again";
+            btn.disabled = false;
+            console.error("EmailJS error:", err);
+          });
+      });
+    })();
+  </script>
 
   <script src="js/script.js"></script>
 

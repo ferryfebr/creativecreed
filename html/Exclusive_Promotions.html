@@ -47,9 +47,9 @@
                   playsinline
                   preload="metadata"
                   muted
-                  poster="../promotion/thumbnail.PNG"
+            
                 >
-                  <source src="../promotion/vidpromotion.mp4" type="video/mp4" />
+                  <source src="../showreel/CC REELS 2025.mp4?v=2" type="video/mp4" />
                 </video>
                 <button
                   type="button"
@@ -176,7 +176,7 @@
               disablePictureInPicture
               preload="metadata"
             >
-              <source src="../promotion/vidpromotion.mp4" type="video/mp4" />
+              <source src="../showreel/CC REELS 2025.mp4?v=2" type="video/mp4" />
             </video>
             <img
               id="promoModalPoster"
@@ -185,23 +185,9 @@
               hidden
             />
           </div>
-          <div class="promo-modal-body">
+          <div class="promo-modal-body" id="promoModalBody" hidden>
             <h2 id="promoModalTitle" class="visually-hidden">Exclusive Promotion</h2>
-            <p>Need support for an upcoming pitch or event project?</p>
-            <p>
-              Nebula X partners with event management companies to provide creative
-              content and event technology solutions that help bring ideas to life.
-            </p>
-            <p>
-              From proposal development, 3D event visualisation and animation to event
-              registration, AI experiences and interactive technologies, we help
-              strengthen both your pitch and project delivery.
-            </p>
-            <p>
-              Consider us your creative and event tech partner whenever you need
-              additional expertise, manpower or specialised solutions.
-            </p>
-            <p>Let&rsquo;s collaborate on your next project.</p>
+            <div class="promo-modal-copy" id="promoModalCopy"></div>
             <div class="promo-modal-footer">
               <a
                 href="https://wa.me/60108064014"
@@ -211,14 +197,14 @@
                 aria-label="Contact Nebula X on WhatsApp"
               >
                 <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                +60 10 806 4014
+                +6013-384 3403
               </a>
               <a
                 href="https://www.nebulax.my"
                 class="promo-modal-website"
                 target="_blank"
                 rel="noopener noreferrer"
-                >www.nebulax.my</a>
+                >www.creativecreed.my</a>
             </div>
           </div>
         </div>
@@ -232,6 +218,99 @@
         </button>
       </div>
     </div>
+
+    <!-- Poster modal text templates (lorem ipsum) -->
+    <template id="posterText-0">
+      <p>✨ Elevate Your Annual Gala Dinner with Creative Creed</p>
+      <p>A remarkable gala dinner is more than just an event—it's an experience that celebrates your people, strengthens your brand, and creates unforgettable memories.</p>
+      <p>Whether you're hosting an Awards Night, Annual Dinner, Corporate Celebration, or Appreciation Gala for 600–800 guests, our dedicated team will bring your vision to life with seamless execution and world-class event production.</p>
+      <p>Our Core Package Includes:</p>
+      <p>✔️ Event & Content Management<br>
+          ✔️ Professional In-House Emcee<br>
+          ✔️ AVSL Setup (Audio, Visual, Stage & Lighting)<br>
+          ✔️ Fabrication & Custom Props<br>
+          ✔️ AI Photobooth Experience<br>
+          ✔️ Photo & Video Coverage<br><br>
+          💼 Starting from RM150,000
+        </p>
+      <p>Enhance your event with optional add-ons including Live Band, Dance Performances, Interactive Wish Wall, Corporate Gifts, and more.</p>
+    </template>
+    <template id="posterText-1">
+      <p>🎙️ Create Conversations That Matter.</p>
+      <p>From thought leadership forums to industry conferences and executive panels, Creative Creed delivers professionally managed events that inspire ideas, encourage collaboration, and leave a lasting impact.</p>
+      <p>Designed for 100–200 participants, our Forum Series Package provides everything you need to host a seamless and engaging event—from planning to production.</p>
+      <p>Our Core Package Includes:</p>
+      <p>✔️ Event & Content Management<br>
+          ✔️ Professional In-House Emcee<br>
+          ✔️ AVSL Setup (Audio, Visual, Stage & Lighting)<br>
+          ✔️ Gimmick Mechanism<br>
+          ✔️ Fabrication & Ready-Made Props<br>
+          ✔️ AI Photobooth Experience<br><br>
+          💼 Starting from RM50,000
+      </p>
+      <p>Elevate your forum with premium add-ons including Professional Photography & Videography, Live Band, Dance Performances, Interactive Wish Wall, and Corporate Gifts.</p>
+      <p>Whether you're organizing a Business Forum, Leadership Summit, Knowledge Sharing Session, Industry Dialogue, Government Forum, or Corporate Seminar, our team ensures every detail is executed to the highest standard.</p>
+    </template>
+    <template id="posterText-2">
+      <p>ONE DAY. BIGGER VALUE. UNLIMITED IMPACT.</p>
+      <p>To celebrate 10 years of Creative Creed, we're bringing you our BIGGEST ONE-DAY OFFER!</p>
+      <p>✨ Enjoy RM10,000 OFF your next event package when you confirm your booking on 10 October 2026 (10.10).</p>
+      <p>Whether you're planning an Annual Dinner, Product Launch, Corporate Conference, Exhibition, Roadshow, or Brand Activation, now is the perfect time to make it happen with Malaysia's trusted event partner.</p>
+      <p>📅 Promotion Date: 10 October 2026 only<br>
+          💰 Special Offer: RM10,000 OFF Event Package<br>
+          ⚡ Limited Slots Available – First Come, First Served
+      </p>
+      <p>Don't miss this exclusive anniversary celebration. Book on 10.10 and turn your vision into an extraordinary experience.</p>
+    </template>
+    <template id="posterText-3">
+      <p>🎉 Celebrate 10 Years of Creative Creed with an Exclusive Anniversary Offer!</p>
+      <p>For a decade, we've been crafting extraordinary experiences that inspire, engage, and leave lasting impressions. As a token of our appreciation, we're giving back with an exclusive 10% OFF for the first 10 confirmed clients.</p>
+      <p>Whether you're planning an Annual Dinner, Product Launch, Conference, Exhibition, Roadshow, Brand Activation, or Corporate Event, now is the perfect time to bring your vision to life with Creative Creed.</p>
+      <p>✨ Promotion Details</p>
+      <p>🎁 10% OFF selected event packages<br>
+          👥 Exclusive to the first 10 confirmed clients<br>
+          📅 Promotion Period: 1 – 31 October 2026
+      </p>
+      <p>Secure your booking early and let our team transform your event into an unforgettable experience.</p>
+    </template>
+    <template id="posterText-4">
+      <p>🎙️ Bring Your People Together. Inspire Every Conversation.</p>
+      <p>A successful townhall isn't just about sharing updates—it's about strengthening culture, inspiring your workforce, and aligning everyone with your organization's vision.</p>
+      <p>Whether you're planning a Corporate Townhall, Leadership Address, Company Update, Employee Engagement Session, or Internal Launch for 300–500 attendees, Creative Creed delivers a seamless experience from concept to execution.</p>
+      <p>Our Core Package Includes:</p>
+      <p>✔️ Event & Content Management<br>
+          ✔️ AVSL Setup (Audio, Visual, Stage & Lighting)<br>
+          ✔️ LED Arch Entrance<br>
+          ✔️ Professional Emcee<br>
+          ✔️ Gimmick Launching Activation<br>
+          ✔️ Photobooth Activation<br>
+          ✔️ Pop-Up Photobooth Setup<br>
+          ✔️ AI Photobooth (PRISM Experience)<br>
+          ✔️ Photo & Video Coverage<br>
+          ✔️ Media Control & Production (MCP)<br><br>
+          💼 Starting from RM80,000
+      </p>
+      <p>Enhance your event with premium add-ons including Live Band, Dance Performances, Interactive Wish Wall, Corporate Gifts, and professional photography & videography.</p>
+    </template>
+    <template id="posterText-5">
+      <p>🎙️ Host a Conference That Inspires, Engages & Delivers Results.</p>
+      <p>A successful corporate conference is more than just presentations—it's about creating meaningful experiences, strengthening connections, and leaving a lasting impression on every delegate.</p>
+      <p>Whether you're organizing a Corporate Conference, Town Hall, Annual Meeting, Product Launch, Business Forum, or Leadership Summit for 600–800 participants, Creative Creed delivers end-to-end event solutions with flawless execution and innovative production.</p>
+      <p>Our Core Package Includes:</p>
+      <p>✔️ Event & Content Management<br>
+          ✔️ AVSL Production<br>
+          ✔️ LED Arch Entrance<br>
+          ✔️ Professional Emcee<br>
+          ✔️ Gimmick Launching Activation<br>
+          ✔️ Photobooth Activation<br>
+          ✔️ Pop-Up Photobooth Setup<br>
+          ✔️ AI Photobooth (PRISM Experience)<br>
+          ✔️ Photo & Video Coverage<br>
+          ✔️ Media Control & Production (MCP)<br><br>
+          💼 Starting from RM150,000
+      </p>
+      <p>Enhance your conference with Live Band, Dance Performances, Interactive Wish Wall, Corporate Gifts, and other premium event experiences tailored to your objectives.</p>
+    </template>
 
   <div id="footer-placeholder"></div>
   <script src="../js/script.js"></script>

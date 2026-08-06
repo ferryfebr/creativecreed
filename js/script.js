@@ -554,9 +554,9 @@
         isExpanded = !isExpanded;
 
         if (isExpanded) {
+          btnShowMore.classList.add("is-expanded");
           extraCards.forEach(card => {
             card.classList.add("is-visible");
-            // Wait for max-height animation to finish before showing overflow (title text)
             setTimeout(() => {
               if (card.classList.contains("is-visible")) {
                 card.style.overflow = "visible";
@@ -564,8 +564,9 @@
             }, 800);
           });
         } else {
+          btnShowMore.classList.remove("is-expanded");
           extraCards.forEach(card => {
-            card.style.overflow = "hidden"; // Hide overflow immediately before collapsing
+            card.style.overflow = "hidden";
             card.classList.remove("is-visible");
           });
         }
