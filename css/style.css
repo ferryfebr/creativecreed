@@ -1956,7 +1956,7 @@ body.light-theme .project-modal__content {
 /* Contact Section */
 .contact-section {
   padding: 80px 20px;
-  background-color: #c41e1e;
+  background-color: #cc2229;
   color: #fff;
   margin-top: 70px;
   scroll-margin-top: 120px;
@@ -2015,7 +2015,7 @@ body.light-theme .project-modal__content {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #c41e1e;
+  color: #cc2229;
   font-size: 1.2rem;
   text-decoration: none;
   transition: transform 0.3s ease;
@@ -2108,7 +2108,7 @@ body.light-theme .project-modal__content {
 
 .btn-send:hover {
   background: #fff;
-  color: #c41e1e;
+  color: #cc2229;
 }
 
 /* Floating WhatsApp */
